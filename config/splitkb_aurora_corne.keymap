@@ -47,23 +47,13 @@
             bindings = <&to SYM>, <&to NAV>;
         };
 
-        ht: hold_tap {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HOLD_TAP";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick_tap_ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
         excumflex: excumflex {
             compatible = "zmk,behavior-mod-morph";
             label = "EXCUMFLEX";
             #binding-cells = <0>;
             bindings = <&kp FR_CIRC>, <&kp FR_EXLM>;
 
-            mods = <(LSHIFT)>;
+            mods = <(MOD_LSFT)>;
         };
 
         virgpts: virgpts {
@@ -72,7 +62,7 @@
             #binding-cells = <0>;
             bindings = <&kp FR_COMM>, <&kp FR_SCLN>;
 
-            mods = <(LSHIFT)>;
+            mods = <(MOD_LSFT)>;
         };
 
         points: points {
@@ -81,7 +71,7 @@
             #binding-cells = <0>;
             bindings = <&kp FR_DOT>, <&kp FR_COLN>;
 
-            mods = <(LSHIFT)>;
+            mods = <(MOD_LSFT)>;
         };
 
         questionstrophe: questionstrophe {
@@ -90,7 +80,7 @@
             #binding-cells = <0>;
             bindings = <&kp FR_QUOT>, <&kp FR_QUES>;
 
-            mods = <(LSHIFT)>;
+            mods = <(MOD_LSFT)>;
         };
 
         dotcom: dotcom {
@@ -99,7 +89,7 @@
             #binding-cells = <0>;
             bindings = <&kp FR_DOT>, <&kp FR_COMM>;
 
-            mods = <(LSHIFT)>;
+            mods = <(MOD_LSFT)>;
         };
 
         smcirc: smcirc {
@@ -108,7 +98,7 @@
             #binding-cells = <0>;
             bindings = <&kp FR_PERC>, <&kp FR_DEG>;
 
-            mods = <(LSHIFT)>;
+            mods = <(MOD_LSFT)>;
         };
 
         bspc_del: backspace_delete {
@@ -117,7 +107,7 @@
             #binding-cells = <0>;
             bindings = <&kp BACKSPACE>, <&kp DELETE>;
 
-            mods = <(LCTRL)>;
+            mods = <(MOD_LCTL)>;
         };
     };
 
@@ -125,7 +115,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            label = "OPTIMOT";
+            label = "ALPHA";
 
             // -----------------------------------------------------------------------------------------
             // |  TAB |  à  |  j  |  o  |  é  |  b  ||        ||  f  |  d  |  l  | ' ? |  q  |  x  |
@@ -135,14 +125,14 @@
 
             bindings = <
 &kp TAB        &kp FR_AGRV  &kp J  &kp O        &kp FR_EACU    &kp B       &kp F      &kp D          &kp L     &questionstrophe  &kp FR_Q  &kp X
-&mt LCTRL ESC  &kp FR_A     &kp I  &kp E        &ht FR_UGRV U  &virgpts    &kp P      &kp T          &kp S     &kp R             &kp N     &excumflex
-&kp LGUI       &kp FR_K     &kp Y  &kp FR_EGRV  &points        &kp FR_W    &kp FR_G   &ht FR_CCED C  &kp FR_M  &kp H             &kp V     &kp FR_Z
+&mt LCTRL ESC  &kp FR_A     &kp I  &kp E        &mt FR_UGRV U  &virgpts    &kp P      &kp T          &kp S     &kp R             &kp N     &excumflex
+&kp LGUI       &kp FR_K     &kp Y  &kp FR_EGRV  &points        &kp FR_W    &kp FR_G   &mt FR_CCED C  &kp FR_M  &kp H             &kp V     &kp FR_Z
                                    &td0         &kp SPACE      &kp RET     &kp LSHFT  &bspc_del      &to NUM
             >;
         };
 
         sym_layer {
-            label = "SYMBOLS";
+            label = "SYMBOL";
 
             // -----------------------------------------------------------------------------------------
             // |      |  #  |  $  |  "  |  '  |  `  ||        ||  [  |  ]  |  <  |  >  |  *  |  /  |
@@ -159,7 +149,7 @@
         };
 
         num_layer {
-            label = "NUMBERS";
+            label = "NUMBER";
 
             // -----------------------------------------------------------------------------------------
             // |      | F1  | F2  | F3  | F4  |  €  ||        ||  ^  |  7  |  8  |  9  |  *  |  /  |
@@ -179,16 +169,18 @@
             label = "NAVIG";
 
             // -----------------------------------------------------------------------------------------
-            // |      |     |     |     |     |     ||        ||PREV |PLAY |NEXT |MUTE |VDWN | VUP |
-            // |      | LFT | DWN | UP  | RGT | MB1 ||        || INS |HOME | PDN | PUP | END |RESET|
-            // |      |     |     |     |     |     ||        ||PSCRN| BT1 | BT2 | BT3 |BTCLR|USBTt|
+            // |      |     |     |     |     |RESET||        ||PREV |PLAY |NEXT |MUTE |VDWN | VUP |
+            // |      | LFT | DWN | UP  | RGT | MB1 ||        ||     | LFT | DWN | UP  | RGT | MB1 |
+            // |      | BT1 | BT2 | BT3 |BTCLR|USBTt||        || INS |HOME | PDN | PUP | END |PSCRN|
             //                       |~OPT |     |     ||  ||     |     |     |
 
+
+
             bindings = <
-&trans  &trans    &trans    &trans   &trans     &trans       &kp C_PREV  &kp C_PP      &kp C_NEXT    &kp C_MUTE    &kp C_VOL_DN  &kp C_VOL_UP
-&trans  &kp LEFT  &kp DOWN  &kp UP   &kp RIGHT  &mkp LCLK    &kp INS     &kp HOME      &kp PG_DN     &kp PG_UP     &kp END       &bootloader
-&trans  &trans    &trans    &trans   &trans     &trans       &kp PSCRN   &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_CLR    &out OUT_TOG
-                            &to OPT  &trans     &trans       &trans      &trans        &trans
+&trans  &trans        &trans        &trans        &trans      &bootloader     &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
+&trans  &kp LEFT      &kp DOWN      &kp UP        &kp RIGHT   &mkp LCLK       &trans      &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &mkp LCLK
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_CLR  &out OUT_TOG    &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
+                                    &to OPT       &trans      &trans          &trans      &trans    &trans
             >;
         };
     };
