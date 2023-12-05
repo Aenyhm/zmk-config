@@ -11,30 +11,31 @@
 #include <dt-bindings/zmk/outputs.h>
 
 #include "keymap_french.h"
-#include "macros.h"
 
 #define ALPHA 0 // Alphas (Optimot layout)
-#define ALTGR 1 // Alternate Alphas
-#define CNTRL 2 // Actions (control) & Navigation
-#define SYMBO 3 // Symbols
-#define FUNUM 4 // Function and Numbers
-#define MEDIA 5 // Media & Volume control
-#define GAMER 6 // Let's play!
-#define ADMIN 7 // OS, Keyboard & Bluetooth
-
-/*
-   KEY POSITIONS
-  ╭────────────────────────╮ ╭────────────────────────╮
-  │  0   1   2   3   4   5 │ │  6   7   8   9  10  11 │
-  │ 12  13  14  15  16  17 │ │ 18  19  20  21  22  23 │
-  │ 24  25  26  27  28  29 │ │ 30  31  32  33  34  35 │
-  ╰───────────╮ 36  37  38 │ │ 39  40  41 ╭───────────╯
-              ╰────────────╯ ╰────────────╯
-*/
-#define LAYER_MOD 37
+#define SHIFT 1 // Uppercase letters
+#define ALTGR 2 // Alternate Alphas
+#define SHALT 3 // SHIFT + ALTGR
+#define CNTRL 4 // Actions (control) & Navigation
+#define SYMBO 5 // Symbols
+#define FUNUM 6 // Function and Numbers
+#define MEDIA 7 // Media & Volume control
+#define GAMER 8 // Let's play!
+#define ADMIN 9 // OS, Keyboard & Bluetooth
 
 / {
     combos {
+        /*
+           KEY POSITIONS
+          ╭────────────────────────╮ ╭────────────────────────╮
+          │  0   1   2   3   4   5 │ │  6   7   8   9  10  11 │
+          │ 12  13  14  15  16  17 │ │ 18  19  20  21  22  23 │
+          │ 24  25  26  27  28  29 │ │ 30  31  32  33  34  35 │
+          ╰───────────╮ 36  37  38 │ │ 39  40  41 ╭───────────╯
+                      ╰────────────╯ ╰────────────╯
+        */
+        #define LAYER_MOD 37
+
         compatible = "zmk,combos";
         combo_layer_symbo { key-positions = <LAYER_MOD 19>; bindings = <&to SYMBO>; };
         combo_layer_funum { key-positions = <LAYER_MOD 20>; bindings = <&to FUNUM>; };
@@ -43,20 +44,30 @@
         combo_layer_gamer { key-positions = <LAYER_MOD 23>; bindings = <&to GAMER>; };
     };
 
-    macros {
-        ZMK_MACRO(qu, bindings = <&kp FR_Q &kp FR_U>;)
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <SHIFT ALTGR>;
+            then-layer = <SHALT>;
+        };
     };
 
-    behaviors {
-        // ALPHA
-        MORPH(virgpts, FR_COMMA, LSFT, FR_SEMI)
-        MORPH(points, FR_DOT, LSFT, FR_COLON)
-        MORPH(questionstrophe, FR_SQT, LSFT, FR_QMARK)
-        MORPH(excumflex, FR_CARET, LSFT, FR_EXCL)
+    macros {
+        #define MACRO_CAPS(name, k) \
+        ZMK_MACRO(name##_up, bindings = <&macro_tap &kp CAPS &kp k &kp CAPS>;)
 
-        // FUNUM
-        MORPH(dotcom, FR_DOT, LSFT, FR_COMMA)
-        MORPH(smcirc, FR_PRCNT, LSFT, FR_DEG)
+        // ALPHA
+        ZMK_MACRO(qu, bindings = <&kp FR_Q &kp FR_U>;)
+
+        // SHIFT
+        MACRO_CAPS(agrv, FR_AGRV)
+        MACRO_CAPS(eacu, FR_EACU)
+        ZMK_MACRO(qu_up, bindings = <&kp LS(FR_Q) &kp FR_U>;)
+        MACRO_CAPS(egrv, FR_EGRV)
+
+        // SHAFT
+        MACRO_CAPS(oe, FR_OE)
+        MACRO_CAPS(cced, FR_CCED)
     };
 
     keymap {
@@ -66,37 +77,72 @@
             label = "ALPHA";
 
             // -----------------------------------------------------------------------------------------
-            // |  TAB |  à  |  j  |  o  |  é  |  b  ||        ||  f  |  d  |  l  | ' ? |  qu |  x  |
-            // |~C]ESC|  a  |  i  |  e  |  u  | , ; ||        ||  p  |  t  |  s  |  r  |  n  | ^ ! |
-            // | LGUI |  k  |  y  |  è  | . : |  w  ||        ||  g  |  c  |  m  |  h  |  v  |  z  |
-            //                        | LALT |~LAYER|^S]SPC||  || ENTER| BSPC |~ALTER|
+            // |  TAB |  à  |  j  |  o  |  é  |  b  ||        ||  f  |  d  |  l  |  '  |  qu |  x  |
+            // |~C]ESC|  a  |  i  |  e  |  u  |  ,  ||        ||  p  |  t  |  s  |  r  |  n  |  ^  |
+            // | LGUI |  k  |  y  |  è  |  .  |  w  ||        ||  g  |  c  |  m  |  h  |  v  |  z  |
+            //                    | LALT |~LAYER|~S]SPC||  || ENTER| BSPC |~ALTGR|
 
             bindings = <
-&kp TAB        &kp FR_AGRV  &kp FR_J  &kp FR_O     &kp FR_EACU  &kp FR_B           &kp FR_F  &kp FR_D  &kp FR_L   &questionstrophe  &qu       &kp FR_X
-&lt CNTRL ESC  &kp FR_A     &kp FR_I  &kp FR_E     &kp FR_U     &virgpts           &kp FR_P  &kp FR_T  &kp FR_S   &kp FR_R          &kp FR_N  &excumflex
-&kp LGUI       &kp FR_K     &kp FR_Y  &kp FR_EGRV  &points      &kp FR_W           &kp FR_G  &kp FR_C  &kp FR_M   &kp FR_H          &kp FR_V  &kp FR_Z
-                                      &kp LALT     &to ALPHA    &mt LSHFT SPACE    &kp RET   &kp BSPC  &mo ALTGR
+&kp TAB        &kp FR_AGRV  &kp FR_J  &kp FR_O     &kp FR_EACU  &kp FR_B           &kp FR_F  &kp FR_D  &kp FR_L   &kp FR_SQT  &qu       &kp FR_X
+&lt CNTRL ESC  &kp FR_A     &kp FR_I  &kp FR_E     &kp FR_U     &kp FR_COMMA       &kp FR_P  &kp FR_T  &kp FR_S   &kp FR_R    &kp FR_N  &kp FR_CARET
+&kp LGUI       &kp FR_K     &kp FR_Y  &kp FR_EGRV  &kp FR_DOT   &kp FR_W           &kp FR_G  &kp FR_C  &kp FR_M   &kp FR_H    &kp FR_V  &kp FR_Z
+                                      &kp LALT     &to ALPHA    &lt SHIFT SPACE    &kp RET   &kp BSPC  &mo ALTGR
+            >;
+        };
+
+        shift_layer {
+            label = "SHIFT";
+
+            // -----------------------------------------------------------------------------------------
+            // |      |  À  |  J  |  O  |  É  |  B  ||        ||  F  |  D  |  L  |  ?  |  Qu |  X  |
+            // |      |  A  |  I  |  E  |  U  |  ;  ||        ||  P  |  T  |  S  |  R  |  N  |  !  |
+            // |      |  K  |  Y  |  È  |  :  |  W  ||        ||  G  |  C  |  M  |  H  |  V  |  Z  |
+            //                       |     |     |     ||  ||     |     |     |
+
+            bindings = <
+&trans  &agrv_up      &kp LS(FR_J)  &kp LS(FR_O)  &eacu_up      &kp LS(FR_B)    &kp LS(FR_F)  &kp LS(FR_D)  &kp LS(FR_L)  &kp FR_QMARK  &qu_up        &kp LS(FR_X)
+&trans  &kp LS(FR_A)  &kp LS(FR_I)  &kp LS(FR_E)  &kp LS(FR_U)  &kp FR_SEMI     &kp LS(FR_P)  &kp LS(FR_T)  &kp LS(FR_S)  &kp LS(FR_R)  &kp LS(FR_N)  &kp FR_EXCL
+&trans  &kp LS(FR_K)  &kp LS(FR_Y)  &egrv_up      &kp FR_COLON  &kp LS(FR_W)    &kp LS(FR_G)  &kp LS(FR_C)  &kp LS(FR_M)  &kp LS(FR_H)  &kp LS(FR_V)  &kp LS(FR_Z)
+                                    &trans        &trans        &trans          &trans        &trans        &trans
             >;
         };
 
         altgr_layer {
             label = "ALTGR";
 
-            // TODO: add Win layer, apostrophe, quote marks, ellipsis, em dash, degree
+            // TODO: add Windows Alt-codes, apostrophe, quote marks, ellipsis, em dash, degree
 
             // -----------------------------------------------------------------------------------------
             // |      |     |     |  œ  |     |     ||        ||     |<qml>|<qmr>|<apo>|     |     |
-            // |      |     |     |     |  ù  |<emd>||        ||     |     |     |     |     |  ¨  |
-            // |      |     |     |     |<ell>|     ||        ||     |  ç  |     |     |     |<deg>|
+            // |      |     |     |     |  ù  |  -  ||        ||     |     |     |     |     |  ¨  |
+            // |      |     |     |     |<ell>|<emd>||        ||     |  ç  |     |     |     |<deg>|
             //                       |     |     |     ||  ||     |     |     |
 
             bindings = <
-&trans  &trans  &trans  &kp FR_OE  &trans       &trans    &trans  &trans       &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans     &kp FR_UGRV  &trans    &trans  &trans       &trans  &trans  &trans  &kp FR_DIAE
-&trans  &trans  &trans  &trans     &trans       &trans    &trans  &kp FR_CCED  &trans  &trans  &trans  &trans
-                        &trans     &trans       &trans    &trans  &trans       &trans
+&trans  &trans  &trans  &kp FR_OE  &trans       &trans          &trans  &trans       &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans     &kp FR_UGRV  &kp FR_MINUS    &trans  &trans       &trans  &trans  &trans  &kp FR_DIAE
+&trans  &trans  &trans  &trans     &trans       &trans          &trans  &kp FR_CCED  &trans  &trans  &trans  &trans
+                        &trans     &trans       &trans          &trans  &trans       &trans
             >;
         };
+
+        shalt_layer {
+            label = "SHALT";
+
+            // -----------------------------------------------------------------------------------------
+            // |      |     |     |  Œ  |     |     ||        ||     |     |     |     |     |     |
+            // |      |     |     |     |     |     ||        ||     |     |     |     |     |     |
+            // |      |     |     |     |     |     ||        ||     |  Ç  |     |     |     |     |
+            //                       |     |     |     ||  ||     |     |     |
+
+            bindings = <
+&trans  &trans  &trans  &oe_up  &trans  &trans    &trans  &trans    &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans    &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &cced_up  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans    &trans  &trans    &trans
+            >;
+        };
+
 
         cntrl_layer {
             label = "CONTROL";
@@ -142,14 +188,14 @@
             // -----------------------------------------------------------------------------------------
             // |      | F1  | F2  | F3  | F4  |  €  ||        ||  ^  |  7  |  8  |  9  |  *  |  /  |
             // |      | F5  | F6  | F7  | F8  |  (  ||        ||  =  |  4  |  5  |  6  |  +  |  -  |
-            // |      | F9  | F10 | F11 | F12 |  )  ||        ||  0  |  1  |  2  |  3  | . , | % ° |
-            //                       |     |     |     ||  ||     |     |     |
+            // |      | F9  | F10 | F11 | F12 |  )  ||        ||  0  |  1  |  2  |  3  |  ,  |  %  |
+            //                       |     |     |     ||  ||     |     |  .  |
 
             bindings = <
-&trans  &kp F1  &kp F2   &kp F3   &kp F4   &kp FR_EURO    &kp FR_CARET  &kp N7  &kp N8  &kp N9  &kp FR_ASTR  &kp FR_SLSH
-&trans  &kp F5  &kp F6   &kp F7   &kp F8   &kp FR_LPRN    &kp FR_EQUAL  &kp N4  &kp N5  &kp N6  &kp FR_PLUS  &kp FR_MINUS
-&trans  &kp F9  &kp F10  &kp F11  &kp F12  &kp FR_RPRN    &kp N0        &kp N1  &kp N2  &kp N3  &dotcom      &smcirc
-                         &trans   &trans   &trans         &trans        &trans  &trans
+&trans  &kp F1  &kp F2   &kp F3   &kp F4   &kp FR_EURO    &kp FR_CARET  &kp N7  &kp N8      &kp N9  &kp FR_ASTR   &kp FR_SLSH
+&trans  &kp F5  &kp F6   &kp F7   &kp F8   &kp FR_LPRN    &kp FR_EQUAL  &kp N4  &kp N5      &kp N6  &kp FR_PLUS   &kp FR_MINUS
+&trans  &kp F9  &kp F10  &kp F11  &kp F12  &kp FR_RPRN    &kp N0        &kp N1  &kp N2      &kp N3  &kp FR_COMMA  &kp FR_PRCNT
+                         &trans   &trans   &trans         &trans        &trans  &kp FR_DOT
             >;
         };
 
