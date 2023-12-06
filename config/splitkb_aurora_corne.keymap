@@ -143,7 +143,6 @@
             >;
         };
 
-
         cntrl_layer {
             label = "CONTROL";
 
@@ -240,19 +239,17 @@
         gamer_layer {
             label = "GAMER";
 
-            // TODO
-
             // -----------------------------------------------------------------------------------------
-            // |      |     |     |     |     |     ||        ||     |     |     |     |     |     |
-            // |      |     |     |     |     |     ||        ||     |     |     |     |     |     |
-            // |      |     |     |     |     |     ||        ||     |     |     |     |     |     |
-            //                       |     |     |     ||  ||     |     |     |
+            // |  TAB |  a  |  e  |  r  |  t  |  y  ||        || &(1)| é(2)| "(3)| '(4)|     |~ALPHA|
+            // |  ESC |  q  |  s  |  z  |  d  |  f  ||        || ((5)| -(6)| è(7)| _(8)|     | LGUI |
+            // | LCTRL|  w  |  x  |  c  |  v  |  b  ||        || ç(9)| à(0)| )(°)| =(+)|     |      |
+            //                        |LALT|LSHFT|SPACE||  ||ENTER|MB1|MB2|
 
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans    &trans  &trans  &trans
+&kp TAB    &kp FR_A  &kp FR_E  &kp FR_R  &kp FR_T   &kp FR_Y     &kp FR_AMPR  &kp FR_EACU   &kp FR_DQT   &kp FR_SQT    &none  &to ALPHA
+&kp ESC    &kp FR_Q  &kp FR_S  &kp FR_Z  &kp FR_D   &kp FR_F     &kp FR_LPRN  &kp FR_MINUS  &kp FR_EGRV  &kp FR_UNDS   &none  &kp LGUI
+&kp LCTRL  &kp FR_W  &kp FR_X  &kp FR_C  &kp FR_V   &kp FR_B     &kp FR_CCED  &kp FR_AGRV   &kp FR_RPRN  &kp FR_EQUAL  &none  &none
+                               &kp LALT  &kp LSHFT  &kp SPACE    &kp RET      &mkp LCLK     &mkp RCLK
             >;
         };
     };
