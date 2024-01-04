@@ -74,14 +74,14 @@
             // -----------------------------------------------------------------------------------------
             // |      |  <  |  >  | œ Œ |  \  |  `  ||        ||  *  |  /  |  [  |  ]  |  «  |  »  |
             // |      |  @  | " ’ | _ … |  ù  |  =  ||        ||  +  | - — |  (  |  )  |  #  |  ¨  |
-            // |      |  ²  |  ~  |  &  | `|` |  %  ||        ||  °  | ç Ç |  {  |  }  |  €  |  $  |
+            // |      |     |  ~  |  &  | `|` |  %  ||        ||     | ç Ç |  {  |  }  |  €  |  $  |
             //                       |     |     |     ||  ||     |     |    |
 
             bindings = <
-&trans  &kp FR_LT   &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &kp FR_RBRC  &kp FR_QML   &kp FR_QMR
-&trans  &kp FR_AT   &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &kp FR_DIAE
-&trans  &kp FR_2UP  &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &kp FR_DEG   &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
-                                 &trans       &trans       &trans            &trans       &trans         &trans
+&trans  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &kp FR_RBRC  &kp FR_QML   &kp FR_QMR
+&trans  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &kp FR_DIAE
+&trans  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
+                                 &trans      &trans       &trans            &trans       &trans         &trans
             >;
         };
 
@@ -89,16 +89,16 @@
             label = "NUMBER";
 
             // -----------------------------------------------------------------------------------------
-            // |      | F1  | F2  | F3  | F4  | F5  ||        || F6  | F7  | F8  | F9  | F10 |     |
-            // |      |  1  |  2  |  3  |  4  |  5  ||        ||  6  |  7  |  8  |  9  |  0  |     |
-            // |      | F11 | F12 |     |     |     ||        ||     |     |     |     |     |     |
+            // |      | F1  | F2  | F3  | F4  | F5  ||        || F6  | F7  | F8  | F9  | F10 | F11 |
+            // |      |  1  |  2  |  3  |  4  |  5  ||        ||  6  |  7  |  8  |  9  |  0  | F12 |
+            // |      |  ¹  |  ²  |  ³  |     |     ||        ||     |     |     |     |  °  |     |
             //                       |     |     |     ||  ||     |     |     |
 
             bindings = <
-&trans  &kp F1     &kp F2     &kp F3     &kp F4     &kp F5       &kp F6     &kp F7     &kp F8     &kp F9     &kp F10    &none
-&trans  &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp KP_N4  &kp KP_N5    &kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0  &none
-&trans  &kp F11    &kp F12    &none      &none      &none        &none      &none      &none      &none      &none      &none
-                              &trans     &trans     &trans       &trans     &trans     &trans
+&trans  &kp F1      &kp F2      &kp F3      &kp F4     &kp F5       &kp F6     &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
+&trans  &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_N4  &kp KP_N5    &kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0   &kp F12
+&trans  &kp FR_1UP  &kp FR_2UP  &kp FR_3UP  &none      &none        &none      &none      &none      &none      &kp FR_DEG  &none
+                                &trans      &trans     &trans       &trans     &trans     &trans
             >;
         };
 

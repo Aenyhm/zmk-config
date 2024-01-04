@@ -122,7 +122,7 @@
  * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
  */
 // Row 1
-#define FR_1UP   RA(FR_1UP)   // ¹
+#define FR_1UP   RA(FR_2UP)   // ¹
 #define FR_TILD  RA(FR_EACU)  // ~ (dead)
 #define FR_HASH  RA(FR_DQT)   // #
 #define FR_LCBR  RA(FR_SQT)   // {
