@@ -56,15 +56,15 @@
 
             // -----------------------------------------------------------------------------------------
             // |  TAB |  À  |  J  |  O  |  É  |  B  ||        ||  F  |  D  |  L  | ' ? |  Q  |  X  |
-            // |^A]ESC|  A  |  I  |  E  |  U  | , ; ||        ||  P  |  T  |  S  |  R  |  N  | ^ ! |
+            // |^C]ESC|  A  |  I  |  E  |  U  | , ; ||        ||  P  |  T  |  S  |  R  |  N  | ^ ! |
             // |  GUI |  K  |  Y  |  È  | . : |  W  ||        ||  G  |  C  |  M  |  H  |  V  |  Z  |
-            //                     | CTRL | ~SYM | SPC ||  ||^S]ENT| ~NUM |BSP/DEL|
+            //                      | ALT | ~SYM | SPC ||  ||^S]ENT| ~NUM |BSP/DEL|
 
             bindings = <
-&kp TAB       &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D   &kp FR_L  &sqt_qmark  &kp FR_Q  &kp FR_X
-&mt LALT ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T   &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
-&kp LGUI      &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C   &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
-                                  &kp LCTRL  &mo SYMBO   &kp SPC        &mt LSHFT RET  &mo FUNUM  &bsp_del
+&kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D   &kp FR_L  &sqt_qmark  &kp FR_Q  &kp FR_X
+&mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T   &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
+&kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C   &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
+                                   &kp LALT   &mo SYMBO   &kp SPC        &mt LSHFT RET  &mo FUNUM  &bsp_del
             >;
         };
 
