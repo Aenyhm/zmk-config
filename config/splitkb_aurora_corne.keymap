@@ -1,123 +1,114 @@
-/*
- * Copyright (c) 2020 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 
 #include "helpers.h"
-#include "keymap_french.h"
+#include "keymap_french_alt.h"
 
-#define ALPHA 0 // Alphas (Optimot layout)
-#define SYMBO 1 // Symbols and Alternate Alphas
-#define FUNUM 2 // Function and Numbers
-#define NAVIG 3 // Bluetooth, Media & Navigation
+#define DEF 0 // Alphas (Optimot layout)
+#define SYM 1 // Symbols and Alternate Alphas
+#define NUM 2 // Numbers and Function keys
+#define NAV 3 // Bluetooth, Media & Navigation
 
 / {
-    behaviors {
-        // Alpha layer
-        MORPH(agrv, FR_AGRV, LSFT, FR_AGRV_UP)
-        MORPH(eacu, FR_EACU, LSFT, FR_EACU_UP)
-        MORPH(egrv, FR_EGRV, LSFT, FR_EGRV_UP)
+  behaviors {
+    MORPH(agrv, FR_AGRV, LSFT, FR_AGRV_UP)
+    MORPH(eacu, FR_EACU, LSFT, FR_EACU_UP)
+    MORPH(egrv, FR_EGRV, LSFT, FR_EGRV_UP)
+    MORPH(caret_excl, FR_CARET, LSFT, FR_EXCL)
+    MORPH(comma_semi, FR_COMMA, LSFT, FR_SEMI)
+    MORPH(dot_colon,  FR_DOT,   LSFT, FR_COLON)
+    MORPH(sqt_qmark,  FR_SQT,   LSFT, FR_QMARK)
+    MORPH(bsp_del, BSPC, LCTL, DEL)
 
-        MORPH(caret_excl, FR_CARET, LSFT, FR_EXCL)
-        MORPH(comma_semi, FR_COMMA, LSFT, FR_SEMI)
-        MORPH(dot_colon,  FR_DOT,   LSFT, FR_COLON)
-        MORPH(sqt_qmark,  FR_SQT,   LSFT, FR_QMARK)
+    MORPH(cced, FR_CCED, LSFT, FR_CCED_UP)
+    MORPH(oe,   FR_OE,   LSFT, FR_OE_UP)
+    MORPH(dqt_apos,     FR_DQT,   LSFT, FR_APOS)
+    MORPH(minus_emdash, FR_MINUS, LSFT, FR_EMDASH)
+    MORPH(unds_ddd,     FR_UNDS,  LSFT, FR_DDD)
+  };
 
-        MORPH(bsp_del, BSPC, LCTL, DEL)
+  conditional_layers {
+    compatible = "zmk,conditional-layers";
+    tri_layer {
+      if-layers = <SYM NUM>;
+      then-layer = <NAV>;
+    };
+  };
 
-        // Symbo layer
-        MORPH(cced, FR_CCED, LSFT, FR_CCED_UP)
-        MORPH(oe,   FR_OE,   LSFT, FR_OE_UP)
+  keymap {
+    compatible = "zmk,keymap";
 
-        MORPH(dqt_apos,     FR_DQT,   LSFT, FR_APOS)
-        MORPH(minus_emdash, FR_MINUS, LSFT, FR_EMDASH)
-        MORPH(unds_ddd,     FR_UNDS,  LSFT, FR_DDD)
+    def_layer {
+      label = "DEF";
+      /*
+      ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+      │ TAB │  À  │  J  │  O  │  É  │  B  │   │  F  │  D  │  L  │ ' ? │  Q  │  X  │
+      │C]ESC│  A  │  I  │  E  │  U  │ , ; │   │  P  │  T  │  S  │  R  │  N  │ ^ ! │
+      │ GUI │  K  │  Y  │  È  │ . : │  W  │   │  G  │  C  │  M  │  H  │  V  │  Z  │
+      ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
+                        │ ALT │ SYM │ SPC │   │S]ENT│ NUM │B/DEL│
+                        ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
+      */
+      bindings = <
+&kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &kp FR_Q  &kp FR_X
+&mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T  &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
+&kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C  &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
+                                   &kp LALT   &mo SYM     &kp SPC        &mt LSHFT RET  &mo NUM   &bsp_del
+      >;
     };
 
-    conditional_layers {
-        compatible = "zmk,conditional-layers";
-        tri_layer {
-            if-layers = <FUNUM SYMBO>;
-            then-layer = <NAVIG>;
-        };
-    };
-
-    keymap {
-        compatible = "zmk,keymap";
-
-        default_layer {
-            label = "ALPHA";
-
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  À  |  J  |  O  |  É  |  B  ||        ||  F  |  D  |  L  | ' ? |  Q  |  X  |
-            // |^C]ESC|  A  |  I  |  E  |  U  | , ; ||        ||  P  |  T  |  S  |  R  |  N  | ^ ! |
-            // |  GUI |  K  |  Y  |  È  | . : |  W  ||        ||  G  |  C  |  M  |  H  |  V  |  Z  |
-            //                      | ALT | ~SYM | SPC ||  ||^S]ENT| ~NUM |BSP/DEL|
-
-            bindings = <
-&kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D   &kp FR_L  &sqt_qmark  &kp FR_Q  &kp FR_X
-&mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T   &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
-&kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C   &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
-                                   &kp LALT   &mo SYMBO   &kp SPC        &mt LSHFT RET  &mo FUNUM  &bsp_del
-            >;
-        };
-
-        symbo_layer {
-            label = "SYMBOL";
-
-            // -----------------------------------------------------------------------------------------
-            // |      |  <  |  >  | œ Œ |  \  |  `  ||        ||  *  |  /  |  [  |  ]  |  «  |  »  |
-            // |      |  @  | " ’ | _ … |  ù  |  =  ||        ||  +  | - — |  (  |  )  |  #  |  ¨  |
-            // |      |     |  ~  |  &  | `|` |  %  ||        ||     | ç Ç |  {  |  }  |  €  |  $  |
-            //                       |     |     |     ||  ||     |     |    |
-
-            bindings = <
+    sym_layer {
+      label = "SYM";
+      /*
+            ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+            │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │  ]  │  «  │  »  │
+            │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │  ¨  │
+            │     │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
+            └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+      */
+      bindings = <
 &trans  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &kp FR_RBRC  &kp FR_QML   &kp FR_QMR
 &trans  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &kp FR_DIAE
 &trans  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
                                  &trans      &trans       &trans            &trans       &trans         &trans
-            >;
-        };
+      >;
+    };
 
-        funum_layer {
-            label = "NUMBER";
-
-            // -----------------------------------------------------------------------------------------
-            // |      | F1  | F2  | F3  | F4  | F5  ||        || F6  | F7  | F8  | F9  | F10 | F11 |
-            // |      |  1  |  2  |  3  |  4  |  5  ||        ||  6  |  7  |  8  |  9  |  0  | F12 |
-            // |      |  ¹  |  ²  |  ³  |     |     ||        ||     |     |     |     |  °  |     |
-            //                       |     |     |     ||  ||     |     |     |
-
-            bindings = <
+    num_layer {
+      label = "NUM";
+      /*
+            ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+            │ F1  │ F2  │ F3  │ F4  │ F5  │   │ F6  │ F7  │ F8  │ F9  │ F10 │ F11 │
+            │  1  │  2  │  3  │  4  │  5  │   │  6  │  7  │  8  │  9  │  0  │ F12 │
+            │  ¹  │  ²  │  ³  │     │     │   │     │     │     │     │  °  │     │
+            └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+      */
+      bindings = <
 &trans  &kp F1      &kp F2      &kp F3      &kp F4     &kp F5       &kp F6     &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
 &trans  &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_N4  &kp KP_N5    &kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0   &kp F12
 &trans  &kp FR_1UP  &kp FR_2UP  &kp FR_3UP  &none      &none        &none      &none      &none      &none      &kp FR_DEG  &none
                                 &trans      &trans     &trans       &trans     &trans     &trans
-            >;
-        };
+      >;
+    };
 
-        navig_layer {
-            label = "NAVIG";
-
-            // -----------------------------------------------------------------------------------------
-            // |      |RESET|     |     |     |BTCLR||        ||PREV |PLAY |NEXT |MUTE |VDWN | VUP |
-            // |      | BT1 | BT2 | BT3 | BT4 |USBTt||        ||     |  ←  |  ↓  |  ↑  |  →  |     |
-            // |      |     |     |     |     |     ||        || INS |HOME | PDN | PUP | END |PSCRN|
-            //                       |     |     |     ||  ||    |     |     |
-
-            bindings = <
+    nav_layer {
+      label = "NAV";
+      /*
+            ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+            │RESET│     │     │     │BTCLR│   │PREV │PLAY │NEXT │MUTE │VDWN │ VUP │
+            │ BT1 │ BT2 │ BT3 │ BT4 │USBTt│   │     │  ←  │  ↓  │  ↑  │  →  │     │
+            │     │     │     │     │     │   │ INS │HOME │ PDN │ PUP │ END │PSCRN│
+            └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+      */
+      bindings = <
 &trans  &bootloader   &none         &none         &none         &bt BT_CLR      &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
 &trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &out OUT_TOG    &none       &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
 &trans  &none         &none         &none         &none         &none           &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
                                     &trans        &trans        &trans          &trans      &trans    &trans
-            >;
-        };
-
+      >;
     };
+
+  };
 };
