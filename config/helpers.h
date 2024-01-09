@@ -8,7 +8,7 @@ name: name { \
   mods = <(MOD_##mod)>; \
 };
 
-#define WIN_ALT_CODE(name, d1, d2, d3) \
+#define MACRO_WIN_ALT_CODE(name, d1, d2, d3) \
 ZMK_MACRO(win_##name, \
   bindings \
     = <&macro_press &kp LALT> \
@@ -16,11 +16,3 @@ ZMK_MACRO(win_##name, \
     , <&macro_release &kp LALT> \
     ; \
 )
-
-#define ALL_TRANS_BINDINGS() \
-bindings = < \
-___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ \
-___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ \
-___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ \
-___ ___ ___ ___ ___ ___ \
->;

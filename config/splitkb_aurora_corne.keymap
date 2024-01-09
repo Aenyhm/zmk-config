@@ -7,26 +7,42 @@
 #include "keymap_french_alt.h"
 
 #define DEF 0     // Linux Alphas (Optimot layout)
-#define WIN 1     // Windows overlay
-#define WIN_DEF 2 // Windows Alternate Alphas
-#define SYM 3     // Symbols and Alternate Alphas
+#define WIN 1     // Windows overlay and Alternate Alphas
+#define SYM 2     // Symbols and Alternate Alphas
+#define WIN_SYM 3 // Windows Symbols and Alternate Alphas
 #define NUM 4     // Numbers and Function keys
 #define NAV 5     // Bluetooth, Media & Navigation
 
 / {
   macros {
-    WIN_ALT_CODE(agrv_up, 1, 9, 2)
+    ZMK_MACRO(q_u, bindings = <&kp FR_Q &kp FR_U>;)
+    ZMK_MACRO(q_u_up,
+      bindings
+        = <&macro_tap_time 10> // Required on Linux
+        // Using CAPS because LSHFT is retained by Mod-Morph on Linux.
+        , <&kp CAPS &kp FR_Q &kp CAPS &kp FR_U>
+        ;
+    )
+
+    MACRO_WIN_ALT_CODE(agrv_up, 1, 9, 2)
+    MACRO_WIN_ALT_CODE(oe_lo,   1, 5, 6)
+    MACRO_WIN_ALT_CODE(oe_up,   1, 4, 0)
+    MACRO_WIN_ALT_CODE(eacu_up, 2, 0, 1)
+    MACRO_WIN_ALT_CODE(egrv_up, 2, 0, 0)
   };
 
   behaviors {
     MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
 
+    // Letters
     MORPH(agrv, &kp FR_AGRV, LSFT, &kp FR_AGRV_UP)
     MORPH(cced, &kp FR_CCED, LSFT, &kp FR_CCED_UP)
     MORPH(eacu, &kp FR_EACU, LSFT, &kp FR_EACU_UP)
     MORPH(egrv, &kp FR_EGRV, LSFT, &kp FR_EGRV_UP)
     MORPH(oe,   &kp FR_OE,   LSFT, &kp FR_OE_UP)
+    MORPH(qu,   &q_u,        LSFT, &q_u_up)
 
+    // Symbols
     MORPH(caret_excl,   &kp FR_CARET, LSFT, &kp FR_EXCL)
     MORPH(comma_semi,   &kp FR_COMMA, LSFT, &kp FR_SEMI)
     MORPH(dot_colon,    &kp FR_DOT,   LSFT, &kp FR_COLON)
@@ -35,12 +51,16 @@
     MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
     MORPH(unds_ddd,     &kp FR_UNDS,  LSFT, &kp FR_DDD)
 
-    MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
+    // Windows Alt Codes
+    MORPH(win_agrv, &agrv,      LSFT, &win_agrv_up)
+    MORPH(win_eacu, &eacu,      LSFT, &win_eacu_up)
+    MORPH(win_egrv, &egrv,      LSFT, &win_egrv_up)
+    MORPH(win_oe,   &win_oe_lo, LSFT, &win_oe_up)
   };
 
   conditional_layers {
     compatible = "zmk,conditional-layers";
-    tri_layer { if-layers = <DEF WIN>; then-layer = <WIN_DEF>; };
+    tri_layer { if-layers = <WIN SYM>; then-layer = <WIN_SYM>; };
   };
 
   keymap {
@@ -50,7 +70,7 @@
       label = "DEFAULT";
       /*
       ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-      │ TAB │  À  │  J  │  O  │  É  │  B  │   │  F  │  D  │  L  │ ' ? │  Q  │  X  │
+      │ TAB │  À  │  J  │  O  │  É  │  B  │   │  F  │  D  │  L  │ ' ? │  Qu │  X  │
       │C]ESC│  A  │  I  │  E  │  U  │ , ; │   │  P  │  T  │  S  │  R  │  N  │ ^ ! │
       │ GUI │  K  │  Y  │  È  │ . : │  W  │   │  G  │  C  │  M  │  H  │  V  │  Z  │
       ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
@@ -58,7 +78,7 @@
                         ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
       */
       bindings = <
-&kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &kp FR_Q  &kp FR_X
+&kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &qu       &kp FR_X
 &mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T  &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
 &kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C  &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
                                    &kp LALT   &mo SYM     &lt NAV SPC    &mt LSHFT RET  &mo NUM   &bsp_del
@@ -67,15 +87,10 @@
 
     win_layer {
       label = "WINDOWS";
-      ALL_TRANS_BINDINGS()
-    };
-
-    win_def_layer {
-      label = "WIN_DEF";
       bindings = <
-___  &win_agrv  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+___  &win_agrv  ___  ___        &win_eacu  ___    ___  ___  ___  ___  ___  ___
+___  ___        ___  ___        ___        ___    ___  ___  ___  ___  ___  ___
+___  ___        ___  &win_egrv  ___        ___    ___  ___  ___  ___  ___  ___
 ___  ___  ___  ___  ___  ___
       >;
     };
@@ -93,6 +108,16 @@ ___  ___  ___  ___  ___  ___
 ___  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &kp FR_RBRC  &kp FR_QML   &kp FR_QMR
 ___  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &kp FR_DIAE
 ___  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
+___  ___  ___  ___  ___  ___
+      >;
+    };
+
+    win_sym_layer {
+      label = "WIN_SYM";
+      bindings = <
+___  ___  ___  &win_oe  ___  ___    ___  ___  ___  ___  ___  ___
+___  ___  ___  ___      ___  ___    ___  ___  ___  ___  ___  ___
+___  ___  ___  ___      ___  ___    ___  ___  ___  ___  ___  ___
 ___  ___  ___  ___  ___  ___
       >;
     };
