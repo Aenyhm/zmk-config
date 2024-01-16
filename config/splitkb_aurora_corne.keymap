@@ -4,113 +4,81 @@
 #include <dt-bindings/zmk/outputs.h>
 
 #include "helpers.h"
+#include "layers.h"
 #include "keymap_french_alt.h"
 #include "win.h"
 #include "mac.h"
-
-// Alphas and OS overlays
-#define DEF 0
-#define WIN 1
-#define MAC 2
-
-// Symbols and Alternate Alphas
-#define SYM 3
-#define WIN_SYM 4
-#define MAC_SYM 5
-
-// Numbers and Function keys
-#define NUM 6
-#define WIN_NUM 7
-#define MAC_NUM 8
-
-// Navigation & Media
-#define NAV 9
-#define WIN_NAV 10
-#define MAC_NAV 11
-
-#define ADM 12 // Bluetooth & Keyboard
 
 // Caps lock delay by OS
 #define LNX_CAPS_DELAY 10
 #define MAC_CAPS_DELAY 100
 
+#define ___ &trans
+
+// OS switch: disable previous toggled layers (OS overlays)
+MACRO(win1, bindings = <&bt BT_SEL 0 &to DEF &tog WIN>;)
+MACRO(mac2, bindings = <&bt BT_SEL 1 &to DEF &tog MAC>;)
+MACRO(tbt3, bindings = <&bt BT_SEL 2 &to DEF>;)
+MACRO(tbt4, bindings = <&bt BT_SEL 3 &to DEF>;)
+
+// `Qu`
+MACRO(q_u, bindings = <&kp FR_Q &kp FR_U>;)
+MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
+MACRO(q_u_up_lnx,
+  tap-ms = <LNX_CAPS_DELAY>;
+  // Using Caps Lock because LSHFT/RSHFT are retained by Mod-Morph on Linux.
+  bindings = <&kp CAPS &kp FR_Q &kp CAPS &kp FR_U>;
+)
+
+// macOS
+MACRO(mac_agrv_up,
+  tap-ms = <MAC_CAPS_DELAY>;
+  bindings = <&kp CAPS &kp FR_AGRV &kp CAPS>;
+)
+
+
+MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
+
+// Letters
+MORPH(agrv, &kp FR_AGRV, LSFT, &kp FR_AGRV_UP)
+MORPH(cced, &kp FR_CCED, LSFT, &kp FR_CCED_UP)
+MORPH(eacu, &kp FR_EACU, LSFT, &kp FR_EACU_UP)
+MORPH(egrv, &kp FR_EGRV, LSFT, &kp FR_EGRV_UP)
+MORPH(oe,   &kp FR_OE,   LSFT, &kp FR_OE_UP)
+
+// `Qu`
+MORPH(qu,     &q_u, LSFT, &q_u_up)
+MORPH(qu_lnx, &q_u, LSFT, &q_u_up_lnx)
+
+// Symbols
+MORPH(caret_excl,   &kp FR_CARET, LSFT, &kp FR_EXCL)
+MORPH(comma_semi,   &kp FR_COMMA, LSFT, &kp FR_SEMI)
+MORPH(dot_colon,    &kp FR_DOT,   LSFT, &kp FR_COLON)
+MORPH(dqt_apos,     &kp FR_DQT,   LSFT, &kp FR_APOS)
+MORPH(minus_emdash, &kp FR_MINUS, LSFT, &kp FR_EMDASH)
+MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
+MORPH(unds_ddd,     &kp FR_UNDS,  LSFT, &kp FR_DDD)
+MORPH(rbrc_iqm,     &kp FR_RBRC,  LSFT, &kp FR_IQM)
+MORPH(diae_iem,     &kp FR_DIAE,  LSFT, &kp FR_IEM)
+
+// Windows
+MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
+MORPH(win_cced, &kp FR_CCED, LSFT, &win_cced_up)
+MORPH(win_eacu, &kp FR_EACU, LSFT, &win_eacu_up)
+MORPH(win_egrv, &kp FR_EGRV, LSFT, &win_egrv_up)
+MORPH(win_oe,   &win_oe_lo,  LSFT, &win_oe_up)
+
+MORPH(win_dqt_apos,     &kp FR_DQT,   LSFT, &win_apos)
+MORPH(win_minus_emdash, &kp FR_MINUS, LSFT, &win_emdash)
+MORPH(win_unds_ddd,     &kp FR_UNDS,  LSFT, &win_ddd)
+MORPH(win_rbrc_iqm,     &kp FR_RBRC,  LSFT, &win_iqm)
+MORPH(win_diae_iem,     &kp FR_DIAE,  LSFT, &win_iem)
+
+// macOS
+MORPH(mac_agrv, &agrv, LSFT, &mac_agrv_up)
+
+
 / {
-  macros {
-    // OS switch: disable previous toggled layers (OS overlays)
-    ZMK_MACRO(win1, bindings = <&bt BT_SEL 0 &to DEF &tog WIN>;)
-    ZMK_MACRO(mac2, bindings = <&bt BT_SEL 1 &to DEF &tog MAC>;)
-    ZMK_MACRO(tbt3, bindings = <&bt BT_SEL 2 &to DEF>;)
-    ZMK_MACRO(tbt4, bindings = <&bt BT_SEL 3 &to DEF>;)
-
-    // `Qu`
-    ZMK_MACRO(q_u, bindings = <&kp FR_Q &kp FR_U>;)
-    ZMK_MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
-    ZMK_MACRO(q_u_up_lnx,
-      tap-ms = <LNX_CAPS_DELAY>;
-      // Using Caps Lock because LSHFT/RSHFT are retained by Mod-Morph on Linux.
-      bindings = <&kp CAPS &kp FR_Q &kp CAPS &kp FR_U>;
-    )
-
-    // macOS
-    ZMK_MACRO(mac_agrv_up,
-      tap-ms = <MAC_CAPS_DELAY>;
-      bindings = <&kp CAPS &kp FR_AGRV &kp CAPS>;
-    )
-  };
-
-  behaviors {
-    MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
-
-    // Letters
-    MORPH(agrv, &kp FR_AGRV, LSFT, &kp FR_AGRV_UP)
-    MORPH(cced, &kp FR_CCED, LSFT, &kp FR_CCED_UP)
-    MORPH(eacu, &kp FR_EACU, LSFT, &kp FR_EACU_UP)
-    MORPH(egrv, &kp FR_EGRV, LSFT, &kp FR_EGRV_UP)
-    MORPH(oe,   &kp FR_OE,   LSFT, &kp FR_OE_UP)
-
-    // `Qu`
-    MORPH(qu,     &q_u, LSFT, &q_u_up)
-    MORPH(qu_lnx, &q_u, LSFT, &q_u_up_lnx)
-
-    // Symbols
-    MORPH(caret_excl,   &kp FR_CARET, LSFT, &kp FR_EXCL)
-    MORPH(comma_semi,   &kp FR_COMMA, LSFT, &kp FR_SEMI)
-    MORPH(dot_colon,    &kp FR_DOT,   LSFT, &kp FR_COLON)
-    MORPH(dqt_apos,     &kp FR_DQT,   LSFT, &kp FR_APOS)
-    MORPH(minus_emdash, &kp FR_MINUS, LSFT, &kp FR_EMDASH)
-    MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
-    MORPH(unds_ddd,     &kp FR_UNDS,  LSFT, &kp FR_DDD)
-    MORPH(rbrc_iqm,     &kp FR_RBRC,  LSFT, &kp FR_IQM)
-    MORPH(diae_iem,     &kp FR_DIAE,  LSFT, &kp FR_IEM)
-
-    // Windows
-    MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
-    MORPH(win_cced, &kp FR_CCED, LSFT, &win_cced_up)
-    MORPH(win_eacu, &kp FR_EACU, LSFT, &win_eacu_up)
-    MORPH(win_egrv, &kp FR_EGRV, LSFT, &win_egrv_up)
-    MORPH(win_oe,   &win_oe_lo,  LSFT, &win_oe_up)
-
-    MORPH(win_dqt_apos,     &kp FR_DQT,   LSFT, &win_apos)
-    MORPH(win_minus_emdash, &kp FR_MINUS, LSFT, &win_emdash)
-    MORPH(win_unds_ddd,     &kp FR_UNDS,  LSFT, &win_ddd)
-    MORPH(win_rbrc_iqm,     &kp FR_RBRC,  LSFT, &win_iqm)
-    MORPH(win_diae_iem,     &kp FR_DIAE,  LSFT, &win_iem)
-
-    // macOS
-    MORPH(mac_agrv, &agrv, LSFT, &mac_agrv_up)
-  };
-
-  conditional_layers {
-    compatible = "zmk,conditional-layers";
-    adm_layer { if-layers = <SYM NUM>; then-layer = <ADM>; };
-    win_sym_layer { if-layers = <WIN SYM>; then-layer = <WIN_SYM>; };
-    mac_sym_layer { if-layers = <MAC SYM>; then-layer = <MAC_SYM>; };
-    win_num_layer { if-layers = <WIN NUM>; then-layer = <WIN_NUM>; };
-    mac_num_layer { if-layers = <MAC NUM>; then-layer = <MAC_NUM>; };
-    win_nav_layer { if-layers = <WIN NAV>; then-layer = <WIN_NAV>; };
-    mac_nav_layer { if-layers = <MAC NAV>; then-layer = <MAC_NAV>; };
-  };
-
   keymap {
     compatible = "zmk,keymap";
 
