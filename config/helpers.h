@@ -9,7 +9,7 @@ name: name { \
 };
 
 #define MACRO_WIN_ALT_CODE(name, d1, d2, d3) \
-ZMK_MACRO(win_##name, \
+ZMK_MACRO(name, \
   bindings \
     = <&macro_press &kp LALT> \
     , <&macro_tap &kp KP_N0 &kp KP_N##d1 &kp KP_N##d2 &kp KP_N##d3> \

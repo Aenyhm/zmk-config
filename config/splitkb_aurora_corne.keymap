@@ -5,6 +5,7 @@
 
 #include "helpers.h"
 #include "keymap_french_alt.h"
+#include "win_alt_codes.h"
 
 // Alphas and OS overlays
 #define DEF 0
@@ -43,23 +44,6 @@
       // Using Caps Lock because LSHFT/RSHFT are retained by Mod-Morph on Linux.
       bindings = <&kp CAPS &kp FR_Q &kp CAPS &kp FR_U>;
     )
-
-    // Windows Alt Codes
-    MACRO_WIN_ALT_CODE(agrv_up, 1, 9, 2) // À
-    MACRO_WIN_ALT_CODE(cced_up, 1, 9, 9) // Ç
-    MACRO_WIN_ALT_CODE(eacu_up, 2, 0, 1) // É
-    MACRO_WIN_ALT_CODE(egrv_up, 2, 0, 0) // È
-    MACRO_WIN_ALT_CODE(oe_lo,   1, 5, 6) // œ
-    MACRO_WIN_ALT_CODE(oe_up,   1, 4, 0) // Œ
-    MACRO_WIN_ALT_CODE(qml,     1, 7, 1) // «
-    MACRO_WIN_ALT_CODE(qmr,     1, 8, 7) // »
-    MACRO_WIN_ALT_CODE(apos,    1, 4, 6) // ’
-    MACRO_WIN_ALT_CODE(emdash,  1, 5, 1) // —
-    MACRO_WIN_ALT_CODE(ddd,     1, 3, 3) // …
-    MACRO_WIN_ALT_CODE(iqm,     1, 9, 1) // ¿
-    MACRO_WIN_ALT_CODE(iem,     1, 6, 1) // ¡
-    MACRO_WIN_ALT_CODE(1up,     1, 8, 5) // ¹
-    MACRO_WIN_ALT_CODE(3up,     1, 7, 9) // ³
 
     // macOS
     ZMK_MACRO(mac_agrv_up,
