@@ -3,11 +3,12 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 
-#include "helpers.h"
+#include "node_free.h"
 #include "layers.h"
 #include "keymap_french_alt.h"
 #include "win.h"
 #include "mac.h"
+
 
 // Caps lock delay by OS
 #define LNX_CAPS_DELAY 10
@@ -15,57 +16,94 @@
 
 #define ___ &trans
 
-// OS switch: disable previous toggled layers (OS overlays)
-MACRO(win1, bindings = <&bt BT_SEL 0 &to DEF &tog WIN>;)
-MACRO(mac2, bindings = <&bt BT_SEL 1 &to DEF &tog MAC>;)
-MACRO(tbt3, bindings = <&bt BT_SEL 2 &to DEF>;)
-MACRO(tbt4, bindings = <&bt BT_SEL 3 &to DEF>;)
+/*
+    ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+    │ TAB │  À  │  J  │  O  │  É  │  B  │   │  F  │  D  │  L  │ ' ? │  Qu │  X  │
+    │C]ESC│  A  │  I  │  E  │  U  │ , ; │   │  P  │  T  │  S  │  R  │  N  │ ^ ! │
+    │ GUI │  K  │  Y  │  È  │ . : │  W  │   │  G  │  C  │  M  │  H  │  V  │  Z  │
+    ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
+                      │ ALT │ SYM │N]SPC│   │S]ENT│ NUM │B/DEL│
+                      ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
+*/
 
-// `Qu`
+MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
+
 MACRO(q_u, bindings = <&kp FR_Q &kp FR_U>;)
-MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
 MACRO(q_u_up_lnx,
   tap-ms = <LNX_CAPS_DELAY>;
   // Using Caps Lock because LSHFT/RSHFT are retained by Mod-Morph on Linux.
   bindings = <&kp CAPS &kp FR_Q &kp CAPS &kp FR_U>;
 )
+MORPH(qu_lnx, &q_u, LSFT, &q_u_up_lnx)
 
-// macOS
+MORPH(agrv, &kp FR_AGRV, LSFT, &kp FR_AGRV_UP)
+MORPH(eacu, &kp FR_EACU, LSFT, &kp FR_EACU_UP)
+MORPH(egrv, &kp FR_EGRV, LSFT, &kp FR_EGRV_UP)
+
+MORPH(caret_excl,   &kp FR_CARET, LSFT, &kp FR_EXCL)
+MORPH(comma_semi,   &kp FR_COMMA, LSFT, &kp FR_SEMI)
+MORPH(dot_colon,    &kp FR_DOT,   LSFT, &kp FR_COLON)
+MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
+
+LAYER(DEFAULT,
+  &kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &qu_lnx   &kp FR_X
+  &mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T  &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
+  &kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C  &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
+                                     &kp LALT   &mo SYM     &lt NAV SPC    &mt LSHFT RET  &mo NUM   &bsp_del
+)
+
+MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
+MORPH(qu, &q_u, LSFT, &q_u_up)
+
+MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
+MORPH(win_eacu, &kp FR_EACU, LSFT, &win_eacu_up)
+MORPH(win_egrv, &kp FR_EGRV, LSFT, &win_egrv_up)
+
+LAYER(WINDOWS,
+  ___  &win_agrv  ___  ___        &win_eacu  ___    ___  ___  ___  ___  &qu  ___
+  ___  ___        ___  ___        ___        ___    ___  ___  ___  ___  ___  ___
+  ___  ___        ___  &win_egrv  ___        ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
+
 MACRO(mac_agrv_up,
   tap-ms = <MAC_CAPS_DELAY>;
   bindings = <&kp CAPS &kp FR_AGRV &kp CAPS>;
 )
+MORPH(mac_agrv, &agrv, LSFT, &mac_agrv_up)
 
+LAYER(MACOS,
+  ___  &mac_agrv  ___  ___  ___  ___    ___  ___  ___  ___  &qu  ___
+  ___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
 
-MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
+/*
+          ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+          │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │ ] ¿ │  «  │  »  │
+          │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │ ¨ ¡ │
+          │     │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
+          └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+*/
 
-// Letters
-MORPH(agrv, &kp FR_AGRV, LSFT, &kp FR_AGRV_UP)
 MORPH(cced, &kp FR_CCED, LSFT, &kp FR_CCED_UP)
-MORPH(eacu, &kp FR_EACU, LSFT, &kp FR_EACU_UP)
-MORPH(egrv, &kp FR_EGRV, LSFT, &kp FR_EGRV_UP)
 MORPH(oe,   &kp FR_OE,   LSFT, &kp FR_OE_UP)
 
-// `Qu`
-MORPH(qu,     &q_u, LSFT, &q_u_up)
-MORPH(qu_lnx, &q_u, LSFT, &q_u_up_lnx)
-
-// Symbols
-MORPH(caret_excl,   &kp FR_CARET, LSFT, &kp FR_EXCL)
-MORPH(comma_semi,   &kp FR_COMMA, LSFT, &kp FR_SEMI)
-MORPH(dot_colon,    &kp FR_DOT,   LSFT, &kp FR_COLON)
 MORPH(dqt_apos,     &kp FR_DQT,   LSFT, &kp FR_APOS)
 MORPH(minus_emdash, &kp FR_MINUS, LSFT, &kp FR_EMDASH)
-MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
 MORPH(unds_ddd,     &kp FR_UNDS,  LSFT, &kp FR_DDD)
 MORPH(rbrc_iqm,     &kp FR_RBRC,  LSFT, &kp FR_IQM)
 MORPH(diae_iem,     &kp FR_DIAE,  LSFT, &kp FR_IEM)
 
-// Windows
-MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
+LAYER(SYMBOLS,
+  ___  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &rbrc_iqm    &kp FR_QML   &kp FR_QMR
+  ___  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &diae_iem
+  ___  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
+  ___  ___  ___  ___  ___  ___
+)
+
 MORPH(win_cced, &kp FR_CCED, LSFT, &win_cced_up)
-MORPH(win_eacu, &kp FR_EACU, LSFT, &win_eacu_up)
-MORPH(win_egrv, &kp FR_EGRV, LSFT, &win_egrv_up)
 MORPH(win_oe,   &win_oe_lo,  LSFT, &win_oe_up)
 
 MORPH(win_dqt_apos,     &kp FR_DQT,   LSFT, &win_apos)
@@ -74,180 +112,98 @@ MORPH(win_unds_ddd,     &kp FR_UNDS,  LSFT, &win_ddd)
 MORPH(win_rbrc_iqm,     &kp FR_RBRC,  LSFT, &win_iqm)
 MORPH(win_diae_iem,     &kp FR_DIAE,  LSFT, &win_iem)
 
-// macOS
-MORPH(mac_agrv, &agrv, LSFT, &mac_agrv_up)
+LAYER(WINSYM,
+  ___  ___  ___            &win_oe        ___  ___    ___  ___                ___  &win_rbrc_iqm  &win_qml  &win_qmr
+  ___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___    ___  &win_minus_emdash  ___  ___            ___       &win_diae_iem
+  ___  ___  ___            ___            ___  ___    ___  &win_cced          ___  ___            ___       ___
+  ___  ___  ___  ___  ___  ___
+)
+
+LAYER(MACSYM,
+  ___  &kp FR_QML  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___         ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___         ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
 
 
-/ {
-  keymap {
-    compatible = "zmk,keymap";
+/*
+          ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+          │ F1  │ F2  │ F3  │ F4  │ F5  │   │ F6  │ F7  │ F8  │ F9  │ F10 │ F11 │
+          │  1  │  2  │  3  │  4  │  5  │   │  6  │  7  │  8  │  9  │  0  │ F12 │
+          │  ¹  │  ²  │  ³  │     │     │   │     │     │     │     │  °  │     │
+          └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+*/
 
-    def_layer {
-      label = "DEFAULT";
-      /*
-      ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-      │ TAB │  À  │  J  │  O  │  É  │  B  │   │  F  │  D  │  L  │ ' ? │  Qu │  X  │
-      │C]ESC│  A  │  I  │  E  │  U  │ , ; │   │  P  │  T  │  S  │  R  │  N  │ ^ ! │
-      │ GUI │  K  │  Y  │  È  │ . : │  W  │   │  G  │  C  │  M  │  H  │  V  │  Z  │
-      ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
-                        │ ALT │ SYM │N]SPC│   │S]ENT│ NUM │B/DEL│
-                        ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
-      */
-      bindings = <
-&kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &qu_lnx   &kp FR_X
-&mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T  &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
-&kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C  &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
-                                   &kp LALT   &mo SYM     &lt NAV SPC    &mt LSHFT RET  &mo NUM   &bsp_del
-      >;
-    };
+LAYER(NUMBERS,
+  ___  &kp F1      &kp F2      &kp F3      &kp F4     &kp F5       &kp F6     &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
+  ___  &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_N4  &kp KP_N5    &kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0   &kp F12
+  ___  &kp FR_1UP  &kp FR_2UP  &kp FR_3UP  &none      &none        &none      &none      &none      &none      &kp FR_DEG  &none
+  ___  ___  ___  ___  ___  ___
+)
 
-    win_layer {
-      label = "WINDOWS";
-      bindings = <
-___  &win_agrv  ___  ___        &win_eacu  ___    ___  ___  ___  ___  &qu  ___
-___  ___        ___  ___        ___        ___    ___  ___  ___  ___  ___  ___
-___  ___        ___  &win_egrv  ___        ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
+LAYER(WINNUM,
+  ___  ___       ___  ___       ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___       ___  ___       ___  ___    ___  ___  ___  ___  ___  ___
+  ___  &win_1up  ___  &win_3up  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
 
-    mac_layer {
-      label = "MAC OS";
-      bindings = <
-___  &mac_agrv  ___  ___  ___  ___    ___  ___  ___  ___  &qu  ___
-___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
+LAYER(MACNUM,
+  ___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
 
-    sym_layer {
-      label = "SYMBOLS";
-      /*
-            ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-            │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │ ] ¿ │  «  │  »  │
-            │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │ ¨ ¡ │
-            │     │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
-            └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
-      */
-      bindings = <
-___  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &rbrc_iqm    &kp FR_QML   &kp FR_QMR
-___  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &diae_iem
-___  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
-___  ___  ___  ___  ___  ___
-      >;
-    };
 
-    win_sym_layer {
-      label = "WIN SYM";
-      bindings = <
-___  ___  ___            &win_oe        ___  ___    ___  ___                ___  &win_rbrc_iqm  &win_qml  &win_qmr
-___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___    ___  &win_minus_emdash  ___  ___            ___       &win_diae_iem
-___  ___  ___            ___            ___  ___    ___  &win_cced          ___  ___            ___       ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
+/*
+          ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+          │     │     │     │     │     │   │PREV │PLAY │NEXT │MUTE │VDWN │ VUP │
+          │UNDO │ CUT │COPY │PASTE│REDO │   │CAPS │  ←  │  ↓  │  ↑  │  →  │     │
+          │     │     │     │     │     │   │ INS │HOME │ PDN │ PUP │ END │PSCRN│
+          └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+*/
 
-    mac_sym_layer {
-      label = "MAC SYM";
-      bindings = <
-___  &kp FR_QML  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___         ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___         ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
+LAYER(NAVIG,
+  ___  &none       &none      &none       &none        &none         &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
+  ___  &kp K_UNDO  &kp K_CUT  &kp K_COPY  &kp K_PASTE  &kp K_REDO    &kp CAPS    &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
+  ___  &none       &none      &none       &none        &none         &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
+  ___  ___  ___  ___  ___  ___
+)
 
-    num_layer {
-      label = "NUMBERS";
-      /*
-            ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-            │ F1  │ F2  │ F3  │ F4  │ F5  │   │ F6  │ F7  │ F8  │ F9  │ F10 │ F11 │
-            │  1  │  2  │  3  │  4  │  5  │   │  6  │  7  │  8  │  9  │  0  │ F12 │
-            │  ¹  │  ²  │  ³  │     │     │   │     │     │     │     │  °  │     │
-            └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
-      */
-      bindings = <
-___  &kp F1      &kp F2      &kp F3      &kp F4     &kp F5       &kp F6     &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
-___  &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_N4  &kp KP_N5    &kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0   &kp F12
-___  &kp FR_1UP  &kp FR_2UP  &kp FR_3UP  &none      &none        &none      &none      &none      &none      &kp FR_DEG  &none
-___  ___  ___  ___  ___  ___
-      >;
-    };
+LAYER(WINNAV,
+  ___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+  ___  &kp WIN_UNDO  &kp WIN_CUT  &kp WIN_COPY  &kp WIN_PASTE  &kp WIN_REDO    ___  ___  ___  ___  ___  ___
+  ___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
 
-    win_num_layer {
-      label = "WIN NUM";
-      bindings = <
-___  ___       ___  ___       ___  ___    ___  ___  ___  ___  ___  ___
-___  ___       ___  ___       ___  ___    ___  ___  ___  ___  ___  ___
-___  &win_1up  ___  &win_3up  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
+LAYER(MACNAV,
+  ___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+  ___  &kp MAC_UNDO  &kp MAC_CUT  &kp MAC_COPY  &kp MAC_PASTE  &kp MAC_REDO    ___  ___  ___  ___  ___  ___
+  ___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+  ___  ___  ___  ___  ___  ___
+)
 
-    mac_num_layer {
-      label = "MAC NUM";
-      bindings = <
-___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
 
-    nav_layer {
-      label = "NAVIG";
-      /*
-            ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-            │     │     │     │     │     │   │PREV │PLAY │NEXT │MUTE │VDWN │ VUP │
-            │UNDO │ CUT │COPY │PASTE│REDO │   │CAPS │  ←  │  ↓  │  ↑  │  →  │     │
-            │     │     │     │     │     │   │ INS │HOME │ PDN │ PUP │ END │PSCRN│
-            └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
-      */
-      bindings = <
-___  &none       &none      &none       &none        &none         &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
-___  &kp K_UNDO  &kp K_CUT  &kp K_COPY  &kp K_PASTE  &kp K_REDO    &kp CAPS    &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
-___  &none       &none      &none       &none        &none         &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
-___  ___  ___  ___  ___  ___
-      >;
-    };
+/*
+    ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+    │RESET│     │     │     │     │     │   │BTCLR│     │     │     │     │RESET│
+    │     │WIN1 │MAC2 │ BT3 │ BT4 │     │   │     │     │     │     │     │     │
+    │     │     │     │     │     │     │   │USBTt│     │     │     │     │     │
+    ╰─────┴─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+*/
 
-    win_nav_layer {
-      label = "WIN NAV";
-      bindings = <
-___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
-___  &kp WIN_UNDO  &kp WIN_CUT  &kp WIN_COPY  &kp WIN_PASTE  &kp WIN_REDO    ___  ___  ___  ___  ___  ___
-___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
+// OS switch: disable previous toggled layers (OS overlays)
+MACRO(win1, bindings = <&bt BT_SEL 0 &to DEF &tog WIN>;)
+MACRO(mac2, bindings = <&bt BT_SEL 1 &to DEF &tog MAC>;)
+MACRO(tbt3, bindings = <&bt BT_SEL 2 &to DEF>;)
+MACRO(tbt4, bindings = <&bt BT_SEL 3 &to DEF>;)
 
-    mac_nav_layer {
-      label = "MAC NAV";
-      bindings = <
-___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
-___  &kp MAC_UNDO  &kp MAC_CUT  &kp MAC_COPY  &kp MAC_PASTE  &kp MAC_REDO    ___  ___  ___  ___  ___  ___
-___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
-___  ___  ___  ___  ___  ___
-      >;
-    };
-
-    adm_layer {
-      label = "ADMIN";
-      /*
-      ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-      │RESET│     │     │     │     │     │   │BTCLR│     │     │     │     │RESET│
-      │     │WIN1 │MAC2 │ BT3 │ BT4 │     │   │     │     │     │     │     │     │
-      │     │     │     │     │     │     │   │USBTt│     │     │     │     │     │
-      ╰─────┴─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
-      */
-      bindings = <
-&bootloader  &none  &none  &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
-&none        &win1  &mac2  &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
-&none        &none  &none  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
-___  ___  ___  ___  ___  ___
-      >;
-    };
-
-  };
-};
+LAYER(ADMIN,
+  &bootloader  &none  &none  &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
+  &none        &win1  &mac2  &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
+  &none        &none  &none  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
+  ___  ___  ___  ___  ___  ___
+)
