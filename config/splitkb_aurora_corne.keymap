@@ -16,8 +16,12 @@
 #define WIN_SYM 4
 #define MAC_SYM 5
 
-#define NUM 6 // Numbers and Function keys
-#define NAV 7 // Bluetooth, Media & Navigation
+// Numbers and Function keys
+#define NUM 6
+#define WIN_NUM 7
+#define MAC_NUM 8
+
+#define NAV 9 // Bluetooth, Media & Navigation
 
 // Caps lock delay by OS
 #define LNX_CAPS_DELAY 10
@@ -41,11 +45,21 @@
     )
 
     // Windows Alt Codes
-    MACRO_WIN_ALT_CODE(agrv_up, 1, 9, 2)
-    MACRO_WIN_ALT_CODE(oe_lo,   1, 5, 6)
-    MACRO_WIN_ALT_CODE(oe_up,   1, 4, 0)
-    MACRO_WIN_ALT_CODE(eacu_up, 2, 0, 1)
-    MACRO_WIN_ALT_CODE(egrv_up, 2, 0, 0)
+    MACRO_WIN_ALT_CODE(agrv_up, 1, 9, 2) // À
+    MACRO_WIN_ALT_CODE(cced_up, 1, 9, 9) // Ç
+    MACRO_WIN_ALT_CODE(eacu_up, 2, 0, 1) // É
+    MACRO_WIN_ALT_CODE(egrv_up, 2, 0, 0) // È
+    MACRO_WIN_ALT_CODE(oe_lo,   1, 5, 6) // œ
+    MACRO_WIN_ALT_CODE(oe_up,   1, 4, 0) // Œ
+    MACRO_WIN_ALT_CODE(qml,     1, 7, 1) // «
+    MACRO_WIN_ALT_CODE(qmr,     1, 8, 7) // »
+    MACRO_WIN_ALT_CODE(apos,    1, 4, 6) // ’
+    MACRO_WIN_ALT_CODE(emdash,  1, 5, 1) // —
+    MACRO_WIN_ALT_CODE(ddd,     1, 3, 3) // …
+    MACRO_WIN_ALT_CODE(iqm,     1, 9, 1) // ¿
+    MACRO_WIN_ALT_CODE(iem,     1, 6, 1) // ¡
+    MACRO_WIN_ALT_CODE(1up,     1, 8, 5) // ¹
+    MACRO_WIN_ALT_CODE(3up,     1, 7, 9) // ³
 
     // macOS
     ZMK_MACRO(mac_agrv_up,
@@ -76,12 +90,21 @@
     MORPH(minus_emdash, &kp FR_MINUS, LSFT, &kp FR_EMDASH)
     MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
     MORPH(unds_ddd,     &kp FR_UNDS,  LSFT, &kp FR_DDD)
+    MORPH(rbrc_iqm,     &kp FR_RBRC,  LSFT, &kp FR_IQM)
+    MORPH(diae_iem,     &kp FR_DIAE,  LSFT, &kp FR_IEM)
 
     // Windows
-    MORPH(win_agrv, &agrv,      LSFT, &win_agrv_up)
-    MORPH(win_eacu, &eacu,      LSFT, &win_eacu_up)
-    MORPH(win_egrv, &egrv,      LSFT, &win_egrv_up)
-    MORPH(win_oe,   &win_oe_lo, LSFT, &win_oe_up)
+    MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
+    MORPH(win_cced, &kp FR_CCED, LSFT, &win_cced_up)
+    MORPH(win_eacu, &kp FR_EACU, LSFT, &win_eacu_up)
+    MORPH(win_egrv, &kp FR_EGRV, LSFT, &win_egrv_up)
+    MORPH(win_oe,   &win_oe_lo,  LSFT, &win_oe_up)
+
+    MORPH(win_dqt_apos,     &kp FR_DQT,   LSFT, &win_apos)
+    MORPH(win_minus_emdash, &kp FR_MINUS, LSFT, &win_emdash)
+    MORPH(win_unds_ddd,     &kp FR_UNDS,  LSFT, &win_ddd)
+    MORPH(win_rbrc_iqm,     &kp FR_RBRC,  LSFT, &win_iqm)
+    MORPH(win_diae_iem,     &kp FR_DIAE,  LSFT, &win_iem)
 
     // macOS
     MORPH(mac_agrv, &agrv, LSFT, &mac_agrv_up)
@@ -91,6 +114,8 @@
     compatible = "zmk,conditional-layers";
     win_sym_layer { if-layers = <WIN SYM>; then-layer = <WIN_SYM>; };
     mac_sym_layer { if-layers = <MAC SYM>; then-layer = <MAC_SYM>; };
+    win_num_layer { if-layers = <WIN NUM>; then-layer = <WIN_NUM>; };
+    mac_num_layer { if-layers = <MAC NUM>; then-layer = <MAC_NUM>; };
   };
 
   keymap {
@@ -139,14 +164,14 @@ ___  ___  ___  ___  ___  ___
       label = "SYMBOLS";
       /*
             ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-            │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │  ]  │  «  │  »  │
-            │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │  ¨  │
+            │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │ ] ¿ │  «  │  »  │
+            │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │ ¨ ¡ │
             │     │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
             └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
       */
       bindings = <
-___  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &kp FR_RBRC  &kp FR_QML   &kp FR_QMR
-___  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &kp FR_DIAE
+___  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &rbrc_iqm    &kp FR_QML   &kp FR_QMR
+___  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &diae_iem
 ___  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
 ___  ___  ___  ___  ___  ___
       >;
@@ -155,9 +180,9 @@ ___  ___  ___  ___  ___  ___
     win_sym_layer {
       label = "WIN SYM";
       bindings = <
-___  ___  ___  &win_oe  ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___      ___  ___    ___  ___  ___  ___  ___  ___
-___  ___  ___  ___      ___  ___    ___  ___  ___  ___  ___  ___
+___  ___  ___            &win_oe        ___  ___    ___  ___                ___  &win_rbrc_iqm  &win_qml  &win_qmr
+___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___    ___  &win_minus_emdash  ___  ___            ___       &win_diae_iem
+___  ___  ___            ___            ___  ___    ___  &win_cced          ___  ___            ___       ___
 ___  ___  ___  ___  ___  ___
       >;
     };
@@ -185,6 +210,26 @@ ___  ___  ___  ___  ___  ___
 ___  &kp F1      &kp F2      &kp F3      &kp F4     &kp F5       &kp F6     &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
 ___  &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_N4  &kp KP_N5    &kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0   &kp F12
 ___  &kp FR_1UP  &kp FR_2UP  &kp FR_3UP  &none      &none        &none      &none      &none      &none      &kp FR_DEG  &none
+___  ___  ___  ___  ___  ___
+      >;
+    };
+
+    win_num_layer {
+      label = "WIN NUM";
+      bindings = <
+___  ___       ___  ___       ___  ___    ___  ___  ___  ___  ___  ___
+___  ___       ___  ___       ___  ___    ___  ___  ___  ___  ___  ___
+___  &win_1up  ___  &win_3up  ___  ___    ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___
+      >;
+    };
+
+    mac_num_layer {
+      label = "MAC NUM";
+      bindings = <
+___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
 ___  ___  ___  ___  ___  ___
       >;
     };
