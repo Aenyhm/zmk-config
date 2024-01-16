@@ -1,3 +1,9 @@
+#define WIN_CUT   LC(X)
+#define WIN_COPY  LC(C)
+#define WIN_PASTE LC(V)
+#define WIN_UNDO  LC(Z)
+#define WIN_REDO  LC(Y)
+
 / {
   macros {
     MACRO_WIN_ALT_CODE(win_agrv_up, 1, 9, 2) // À

@@ -5,7 +5,8 @@
 
 #include "helpers.h"
 #include "keymap_french_alt.h"
-#include "win_alt_codes.h"
+#include "win.h"
+#include "mac.h"
 
 // Alphas and OS overlays
 #define DEF 0
@@ -22,7 +23,12 @@
 #define WIN_NUM 7
 #define MAC_NUM 8
 
-#define NAV 9 // Bluetooth, Media & Navigation
+// Navigation & Media
+#define NAV 9
+#define WIN_NAV 10
+#define MAC_NAV 11
+
+#define ADM 12 // Bluetooth & Keyboard
 
 // Caps lock delay by OS
 #define LNX_CAPS_DELAY 10
@@ -96,10 +102,13 @@
 
   conditional_layers {
     compatible = "zmk,conditional-layers";
+    adm_layer { if-layers = <SYM NUM>; then-layer = <ADM>; };
     win_sym_layer { if-layers = <WIN SYM>; then-layer = <WIN_SYM>; };
     mac_sym_layer { if-layers = <MAC SYM>; then-layer = <MAC_SYM>; };
     win_num_layer { if-layers = <WIN NUM>; then-layer = <WIN_NUM>; };
     mac_num_layer { if-layers = <MAC NUM>; then-layer = <MAC_NUM>; };
+    win_nav_layer { if-layers = <WIN NAV>; then-layer = <WIN_NAV>; };
+    mac_nav_layer { if-layers = <MAC NAV>; then-layer = <MAC_NAV>; };
   };
 
   keymap {
@@ -222,15 +231,52 @@ ___  ___  ___  ___  ___  ___
       label = "NAVIG";
       /*
             ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-            │RESET│     │     │     │BTCLR│   │PREV │PLAY │NEXT │MUTE │VDWN │ VUP │
-            │WIN1 │MAC2 │ BT3 │ BT4 │USBTt│   │     │  ←  │  ↓  │  ↑  │  →  │     │
+            │     │     │     │     │     │   │PREV │PLAY │NEXT │MUTE │VDWN │ VUP │
+            │UNDO │ CUT │COPY │PASTE│REDO │   │CAPS │  ←  │  ↓  │  ↑  │  →  │     │
             │     │     │     │     │     │   │ INS │HOME │ PDN │ PUP │ END │PSCRN│
             └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
       */
       bindings = <
-___  &bootloader  &none  &none  &none  &bt BT_CLR      &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
-___  &win1        &mac2  &tbt3  &tbt4  &out OUT_TOG    &none       &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
-___  &none        &none  &none  &none  &none           &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
+___  &none       &none      &none       &none        &none         &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
+___  &kp K_UNDO  &kp K_CUT  &kp K_COPY  &kp K_PASTE  &kp K_REDO    &kp CAPS    &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
+___  &none       &none      &none       &none        &none         &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
+___  ___  ___  ___  ___  ___
+      >;
+    };
+
+    win_nav_layer {
+      label = "WIN NAV";
+      bindings = <
+___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+___  &kp WIN_UNDO  &kp WIN_CUT  &kp WIN_COPY  &kp WIN_PASTE  &kp WIN_REDO    ___  ___  ___  ___  ___  ___
+___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___
+      >;
+    };
+
+    mac_nav_layer {
+      label = "MAC NAV";
+      bindings = <
+___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+___  &kp MAC_UNDO  &kp MAC_CUT  &kp MAC_COPY  &kp MAC_PASTE  &kp MAC_REDO    ___  ___  ___  ___  ___  ___
+___  ___           ___          ___           ___            ___             ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___
+      >;
+    };
+
+    adm_layer {
+      label = "ADMIN";
+      /*
+      ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+      │RESET│     │     │     │     │     │   │BTCLR│     │     │     │     │RESET│
+      │     │WIN1 │MAC2 │ BT3 │ BT4 │     │   │     │     │     │     │     │     │
+      │     │     │     │     │     │     │   │USBTt│     │     │     │     │     │
+      ╰─────┴─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+      */
+      bindings = <
+&bootloader  &none  &none  &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
+&none        &win1  &mac2  &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
+&none        &none  &none  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
 ___  ___  ___  ___  ___  ___
       >;
     };
