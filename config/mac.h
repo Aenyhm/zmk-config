@@ -1,5 +1,0 @@
-#define MAC_CUT   LG(X)
-#define MAC_COPY  LG(C)
-#define MAC_PASTE LG(V)
-#define MAC_UNDO  LG(Z)
-#define MAC_REDO  LS(LG(Z))

@@ -5,14 +5,9 @@
 
 #include "node_free.h"
 #include "layers.h"
-#include "keymap_french_alt.h"
-#include "win.h"
-#include "mac.h"
-
-
-// Caps lock delay by OS
-#define LNX_CAPS_DELAY 10
-#define MAC_CAPS_DELAY 100
+#include "keyboards/linux.h"
+#include "keyboards/windows.h"
+#include "keyboards/macos.h"
 
 #define ___ &trans
 
@@ -34,16 +29,16 @@ MACRO(q_u_up_lnx,
   // Using Caps Lock because LSHFT/RSHFT are retained by Mod-Morph on Linux.
   bindings = <&kp CAPS &kp FR_Q &kp CAPS &kp FR_U>;
 )
-MORPH(qu_lnx, &q_u, LSFT, &q_u_up_lnx)
+MORPH_UP(qu_lnx, &q_u, &q_u_up_lnx)
 
-MORPH(agrv, &kp FR_AGRV, LSFT, &kp FR_AGRV_UP)
-MORPH(eacu, &kp FR_EACU, LSFT, &kp FR_EACU_UP)
-MORPH(egrv, &kp FR_EGRV, LSFT, &kp FR_EGRV_UP)
+MORPH_UP(agrv, &kp FR_AGRV, &kp FR_AGRV_UP)
+MORPH_UP(eacu, &kp FR_EACU, &kp FR_EACU_UP)
+MORPH_UP(egrv, &kp FR_EGRV, &kp FR_EGRV_UP)
 
-MORPH(caret_excl,   &kp FR_CARET, LSFT, &kp FR_EXCL)
-MORPH(comma_semi,   &kp FR_COMMA, LSFT, &kp FR_SEMI)
-MORPH(dot_colon,    &kp FR_DOT,   LSFT, &kp FR_COLON)
-MORPH(sqt_qmark,    &kp FR_SQT,   LSFT, &kp FR_QMARK)
+MORPH_UP(caret_excl, &kp FR_CARET, &kp FR_EXCL)
+MORPH_UP(comma_semi, &kp FR_COMMA, &kp FR_SEMI)
+MORPH_UP(dot_colon,  &kp FR_DOT,   &kp FR_COLON)
+MORPH_UP(sqt_qmark,  &kp FR_SQT,   &kp FR_QMARK)
 
 LAYER(DEFAULT,
   &kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &qu_lnx   &kp FR_X
@@ -53,11 +48,11 @@ LAYER(DEFAULT,
 )
 
 MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
-MORPH(qu, &q_u, LSFT, &q_u_up)
+MORPH_UP(qu, &q_u, &q_u_up)
 
-MORPH(win_agrv, &kp FR_AGRV, LSFT, &win_agrv_up)
-MORPH(win_eacu, &kp FR_EACU, LSFT, &win_eacu_up)
-MORPH(win_egrv, &kp FR_EGRV, LSFT, &win_egrv_up)
+MORPH_UP(win_agrv, &kp FR_AGRV, &win_agrv_up)
+MORPH_UP(win_eacu, &kp FR_EACU, &win_eacu_up)
+MORPH_UP(win_egrv, &kp FR_EGRV, &win_egrv_up)
 
 LAYER(WINDOWS,
   ___  &win_agrv  ___  ___        &win_eacu  ___    ___  ___  ___  ___  &qu  ___
@@ -66,16 +61,15 @@ LAYER(WINDOWS,
   ___  ___  ___  ___  ___  ___
 )
 
-MACRO(mac_agrv_up,
-  tap-ms = <MAC_CAPS_DELAY>;
-  bindings = <&kp CAPS &kp FR_AGRV &kp CAPS>;
-)
-MORPH(mac_agrv, &agrv, LSFT, &mac_agrv_up)
+MORPH_UP(mac_agrv, &kp FR_AGRV, &mac_agrv_up)
+MORPH_UP(mac_eacu, &kp FR_EACU, &mac_eacu_up)
+MORPH_UP(mac_egrv, &kp FR_EGRV, &mac_egrv_up)
+MORPH_UP(mac_caret_excl, &kp FR_CARET, &kp MAC_EXCL)
 
 LAYER(MACOS,
-  ___  &mac_agrv  ___  ___  ___  ___    ___  ___  ___  ___  &qu  ___
-  ___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-  ___  ___        ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  &mac_agrv  ___  ___        &mac_eacu  ___    ___  ___  ___  ___  &qu  ___
+  ___  ___        ___  ___        ___        ___    ___  ___  ___  ___  ___  &mac_caret_excl
+  ___  ___        ___  &mac_egrv  ___        ___    ___  ___  ___  ___  ___  ___
   ___  ___  ___  ___  ___  ___
 )
 
@@ -87,42 +81,84 @@ LAYER(MACOS,
           └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
 */
 
-MORPH(cced, &kp FR_CCED, LSFT, &kp FR_CCED_UP)
-MORPH(oe,   &kp FR_OE,   LSFT, &kp FR_OE_UP)
-
-MORPH(dqt_apos,     &kp FR_DQT,   LSFT, &kp FR_APOS)
-MORPH(minus_emdash, &kp FR_MINUS, LSFT, &kp FR_EMDASH)
-MORPH(unds_ddd,     &kp FR_UNDS,  LSFT, &kp FR_DDD)
-MORPH(rbrc_iqm,     &kp FR_RBRC,  LSFT, &kp FR_IQM)
-MORPH(diae_iem,     &kp FR_DIAE,  LSFT, &kp FR_IEM)
+// Row 1
+MORPH_UP(_lt,      &kp FR_LT,    &none)
+MORPH_UP(gt,       &kp FR_GT,    &none)
+MORPH_UP(oe,       &kp FR_OE,    &kp FR_OE_UP)
+MORPH_UP(bsls,     &kp FR_BSLS,  &none)
+MORPH_UP(grave,    &kp FR_GRAVE, &none)
+MORPH_UP(astr,     &kp FR_ASTR,  &none)
+MORPH_UP(slsh,     &kp FR_SLSH,  &none)
+MORPH_UP(lbrc,     &kp FR_LBRC,  &none)
+MORPH_UP(rbrc_iqm, &kp FR_RBRC,  &kp FR_IQM)
+MORPH_UP(qml,      &kp FR_QML,   &none)
+MORPH_UP(qmr,      &kp FR_QMR,   &none)
+// Row 2
+MORPH_UP(at,       &kp FR_AT,    &none)
+MORPH_UP(dqt_apos, &kp FR_DQT,   &kp FR_APOS)
+MORPH_UP(unds_ddd, &kp FR_UNDS,  &kp FR_DDD)
+MORPH_UP(ugrv,     &kp FR_UGRV,  &none)
+MORPH_UP(equal,    &kp FR_EQUAL, &none)
+MORPH_UP(plus,     &kp FR_PLUS,  &none)
+MORPH_UP(minus_em, &kp FR_MINUS, &kp FR_EMDASH)
+MORPH_UP(lprn,     &kp FR_LPRN,  &none)
+MORPH_UP(rprn,     &kp FR_RPRN,  &none)
+MORPH_UP(hash,     &kp FR_HASH,  &none)
+MORPH_UP(diae_iem, &kp FR_DIAE,  &kp FR_IEM)
+// Row 3
+MORPH_UP(tild,     &kp FR_TILD,  &none)
+MORPH_UP(ampr,     &kp FR_AMPR,  &none)
+MORPH_UP(pipe,     &kp FR_PIPE,  &none)
+MORPH_UP(prcnt,    &kp FR_PRCNT, &none)
+MORPH_UP(cced,     &kp FR_CCED,  &kp FR_CCED_UP)
+MORPH_UP(prcnt,    &kp FR_PRCNT, &none)
+MORPH_UP(lcbr,     &kp FR_LCBR,  &none)
+MORPH_UP(rcbr,     &kp FR_RCBR,  &none)
+MORPH_UP(euro,     &kp FR_EURO,  &none)
+MORPH_UP(dlr,      &kp FR_DLR,   &none)
 
 LAYER(SYMBOLS,
-  ___  &kp FR_LT  &kp FR_GT    &oe          &kp FR_BSLS  &kp FR_GRAVE      &kp FR_ASTR  &kp FR_SLSH    &kp FR_LBRC  &rbrc_iqm    &kp FR_QML   &kp FR_QMR
-  ___  &kp FR_AT  &dqt_apos    &unds_ddd    &kp FR_UGRV  &kp FR_EQUAL      &kp FR_PLUS  &minus_emdash  &kp FR_LPRN  &kp FR_RPRN  &kp FR_HASH  &diae_iem
-  ___  &none      &kp FR_TILD  &kp FR_AMPR  &kp FR_PIPE  &kp FR_PERCENT    &none        &cced          &kp FR_LCBR  &kp FR_RCBR  &kp FR_EURO  &kp FR_DLR
+  ___  &_lt   &gt        &oe        &bsls  &grave    &astr  &slsh      &lbrc  &rbrc_iqm  &qml   &qmr
+  ___  &at    &dqt_apos  &unds_ddd  &ugrv  &equal    &plus  &minus_em  &lprn  &rprn      &hash  &diae_iem
+  ___  &none  &tild      &ampr      &pipe  &prcnt    &none  &cced      &lcbr  &rcbr      &euro  &dlr
   ___  ___  ___  ___  ___  ___
 )
 
-MORPH(win_cced, &kp FR_CCED, LSFT, &win_cced_up)
-MORPH(win_oe,   &win_oe_lo,  LSFT, &win_oe_up)
-
-MORPH(win_dqt_apos,     &kp FR_DQT,   LSFT, &win_apos)
-MORPH(win_minus_emdash, &kp FR_MINUS, LSFT, &win_emdash)
-MORPH(win_unds_ddd,     &kp FR_UNDS,  LSFT, &win_ddd)
-MORPH(win_rbrc_iqm,     &kp FR_RBRC,  LSFT, &win_iqm)
-MORPH(win_diae_iem,     &kp FR_DIAE,  LSFT, &win_iem)
+// Row 1
+MORPH_UP(win_oe,       &win_oe_lo,   &win_oe_up)
+MORPH_UP(win_rbrc_iqm, &kp FR_RBRC,  &win_iqm)
+// Row 2
+MORPH_UP(win_dqt_apos, &kp FR_DQT,   &win_apos)
+MORPH_UP(win_unds_ddd, &kp FR_UNDS,  &win_ddd)
+MORPH_UP(win_minus_em, &kp FR_MINUS, &win_emdash)
+MORPH_UP(win_diae_iem, &kp FR_DIAE,  &win_iem)
+// Row 3
+MORPH_UP(win_cced,     &kp FR_CCED,  &win_cced_up)
 
 LAYER(WINSYM,
-  ___  ___  ___            &win_oe        ___  ___    ___  ___                ___  &win_rbrc_iqm  &win_qml  &win_qmr
-  ___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___    ___  &win_minus_emdash  ___  ___            ___       &win_diae_iem
-  ___  ___  ___            ___            ___  ___    ___  &win_cced          ___  ___            ___       ___
+  ___  ___  ___            &win_oe        ___  ___    ___  ___            ___  &win_rbrc_iqm  &win_qml  &win_qmr
+  ___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___    ___  &win_minus_em  ___  ___            ___       &win_diae_iem
+  ___  ___  ___            ___            ___  ___    ___  &win_cced      ___  ___            ___       ___
   ___  ___  ___  ___  ___  ___
 )
 
+// Row 1
+MORPH_UP(mac_grave, &kp MAC_GRAVE, &none)
+MORPH_UP(mac_astr,  &kp MAC_ASTR,  &none)
+// Row 2
+MORPH_UP(mac_at,    &kp MAC_AT,    &none)
+MORPH_UP(mac_equal, &kp MAC_EQUAL, &none)
+MORPH_UP(mac_plus,  &kp MAC_PLUS,  &none)
+MORPH_UP(mac_hash,  &kp MAC_HASH,  &none)
+// Row 3
+MORPH_UP(mac_tild,  &kp MAC_TILD,  &none)
+MORPH_UP(mac_pipe,  &kp MAC_PIPE,  &none)
+MORPH_UP(mac_cced,  &kp FR_CCED,  &mac_cced_up)
+
 LAYER(MACSYM,
-  ___  &kp FR_QML  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-  ___  ___         ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-  ___  ___         ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___        ___  ___  ___   &mac_grave    &mac_astr  ___        ___  ___  ___        ___
+  ___  &mac_at    ___  ___  ___   &mac_equal    &mac_plus  ___        ___  ___  &mac_hash  ___
+  ___  &mac_tild  ___  &mac_pipe  ___  ___      ___        &mac_cced  ___  ___  ___        ___
   ___  ___  ___  ___  ___  ___
 )
 

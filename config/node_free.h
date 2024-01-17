@@ -14,6 +14,8 @@
   }; \
 };
 
+#define MORPH_UP(name, k1, k2) MORPH(name, k1, LSFT, k2)
+
 #define MACRO(...) \
 / { \
   macros { \

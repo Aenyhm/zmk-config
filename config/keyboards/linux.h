@@ -95,8 +95,8 @@
 #define FR_DIAE LS(FR_CARET) // ¨ (dead)
 #define FR_PND  LS(FR_DLR)   // £
 // Row 3
-#define FR_PERCENT LS(FR_UGRV) // %
-#define FR_MICR    LS(FR_ASTR) // µ
+#define FR_PRCNT LS(FR_UGRV) // %
+#define FR_MICR  LS(FR_ASTR) // µ
 // Row 4
 #define FR_GT    LS(FR_LT)    // >
 #define FR_QMARK LS(FR_COMMA) // ?
@@ -174,3 +174,5 @@
 #define FR_UARR     LS(RA(FR_B))     // ↑
 #define FR_RARR     LS(RA(FR_N))     // →
 #define FR_DDD      LS(RA(FR_COMMA)) // …
+
+#define LNX_CAPS_DELAY 10
