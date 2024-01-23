@@ -1,8 +1,13 @@
+#pragma once
+
+#define LNX_CAPS_DELAY 10
+
+
 /*
 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
 │ ² │ & │ é │ " │ ' │ ( │ - │ è │ _ │ ç │ à │ ) │ = │       │
 ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤
-│     │ A │ Z │ E │ R │ T │ Y │ U │ I │ O │ P │ ^ │ $ │     │
+│     │ A │ Z │ E │ R │ T │ Y │ U │ I │ O │ P │^☠️│ $ │     │
 ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐    │
 │      │ Q │ S │ D │ F │ G │ H │ J │ K │ L │ M │ ù │ * │    │
 ├────┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴────┤
@@ -68,7 +73,7 @@
 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
 │ ³ │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 0 │ ° │ + │       │
 ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤
-│     │   │   │   │   │   │   │   │   │   │   │ ¨ │ £ │     │
+│     │   │   │   │   │   │   │   │   │   │   │¨☠️│ £ │     │
 ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐    │
 │      │   │   │   │   │   │   │   │   │   │   │ % │ µ │    │
 ├────┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴────┤
@@ -78,22 +83,22 @@
 └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
 */
 // Row 1
-#define FR_3UP  LS(FR_2UP)   // ³
-#define FR_1    LS(FR_AMPR)  // 1
-#define FR_2    LS(FR_EACU)  // 2
-#define FR_3    LS(FR_DQT)   // 3
-#define FR_4    LS(FR_SQT)   // 4
-#define FR_5    LS(FR_LPRN)  // 5
-#define FR_6    LS(FR_MINUS) // 6
-#define FR_7    LS(FR_EGRV)  // 7
-#define FR_8    LS(FR_UNDS)  // 8
-#define FR_9    LS(FR_CCED)  // 9
-#define FR_0    LS(FR_AGRV)  // 0
-#define FR_DEG  LS(FR_RPRN)  // °
-#define FR_PLUS LS(FR_EQUAL) // +
+#define FR_3UP   LS(FR_2UP)   // ³
+#define FR_1     LS(FR_AMPR)  // 1
+#define FR_2     LS(FR_EACU)  // 2
+#define FR_3     LS(FR_DQT)   // 3
+#define FR_4     LS(FR_SQT)   // 4
+#define FR_5     LS(FR_LPRN)  // 5
+#define FR_6     LS(FR_MINUS) // 6
+#define FR_7     LS(FR_EGRV)  // 7
+#define FR_8     LS(FR_UNDS)  // 8
+#define FR_9     LS(FR_CCED)  // 9
+#define FR_0     LS(FR_AGRV)  // 0
+#define FR_DEG   LS(FR_RPRN)  // °
+#define FR_PLUS  LS(FR_EQUAL) // +
 // Row 2
-#define FR_DIAE LS(FR_CARET) // ¨ (dead)
-#define FR_PND  LS(FR_DLR)   // £
+#define FR_DIAE  LS(FR_CARET) // ¨ (dead)
+#define FR_PND   LS(FR_DLR)   // £
 // Row 3
 #define FR_PRCNT LS(FR_UGRV) // %
 #define FR_MICR  LS(FR_ASTR) // µ
@@ -108,37 +113,40 @@
 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
 │ ¹ │   │ ~ │ # │ { │ [ │ | │ ` │ \ │   │ @ │ ] │ } │       │
 ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤
-│     │   │   │ € │   │   │   │   │   │ œ │   │   │   │     │
+│     │   │   │ € │   │   │   │   │   │ œ │   │~☠️│   │     │
 ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐    │
-│      │   │   │   │   │ ’ │   │   │   │   │   │ ' │   │    │
+│      │   │   │   │   │ ’ │   │   │   │   │   │'☠️│`☠️│    │
 ├────┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴────┤
-│    │   │ « │ » │ © │   │ ↓ │   │ ¿ │   │   │ ¡ │          │
+│    │ ≤ │ « │ » │ © │   │ ↓ │   │ ¿ │   │   │ ¡ │          │
 ├────┼───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤
 │    │    │    │                        │    │    │    │    │
 └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
 */
 // Row 1
 #define FR_1UP   RA(FR_2UP)   // ¹
-#define FR_TILD  RA(FR_EACU)  // ~ (dead)
+#define FR_TILD  RA(FR_EACU)  // ~  /!\ win dead
 #define FR_HASH  RA(FR_DQT)   // #
 #define FR_LCBR  RA(FR_SQT)   // {
 #define FR_LBRC  RA(FR_LPRN)  // [
 #define FR_PIPE  RA(FR_MINUS) // |
-#define FR_GRAVE RA(FR_EGRV)  // ` (dead)
-#define FR_BSLS  RA(FR_UNDS)  // (backslash)
+#define FR_GRAVE RA(FR_EGRV)  // `  /!\ win dead
+#define FR_BSLS  RA(FR_UNDS)  // backslash
 #define FR_AT    RA(FR_AGRV)  // @
 #define FR_RBRC  RA(FR_RPRN)  // ]
 #define FR_RCBR  RA(FR_EQUAL) // }
 // Row 2
 #define FR_EURO  RA(FR_E)     // €
 #define FR_OE    RA(FR_O)     // œ
+#define FR_TILDD RA(FR_CARET) // ~ (dead)
 // Row 3
 #define FR_APOS  RA(FR_G)     // ’
 #define FR_ACUTE RA(FR_UGRV)  // ' (dead)
+#define FR_GRAVD RA(FR_ASTR)  // ` (dead)
 // Row 4
+#define FR_LTE   RA(FR_LT)    // ≤
 #define FR_QML   RA(FR_W)     // «
 #define FR_QMR   RA(FR_X)     // »
-#define FR_COP   RA(FR_C)     // ©
+#define FR_COP   RA(FR_C)     // © (mac too)
 #define FR_DARR  RA(FR_B)     // ↓
 #define FR_IQM   RA(FR_COMMA) // ¿
 #define FR_IEM   RA(FR_EXCL)  // ¡
@@ -157,22 +165,28 @@
 └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
 */
 // Row 1
-#define FR_EACU_UP  LS(RA(FR_EACU))  // É
-#define FR_EMDASH   LS(RA(FR_SQT))   // —
-#define FR_EGRV_UP  LS(RA(FR_EGRV))  // È
-#define FR_TM       LS(RA(FR_UNDS))  // ™
-#define FR_CCED_UP  LS(RA(FR_CCED))  // Ç
-#define FR_AGRV_UP  LS(RA(FR_AGRV))  // À
-#define FR_DIFF     LS(RA(FR_RPRN))  // ≠
-#define FR_PLUMI    LS(RA(FR_EQUAL)) // ±
+#define FR_EACU_UP LS(RA(FR_EACU))  // É
+#define FR_EMDASH  LS(RA(FR_SQT))   // —
+#define FR_EGRV_UP LS(RA(FR_EGRV))  // È
+#define FR_TM      LS(RA(FR_UNDS))  // ™
+#define FR_CCED_UP LS(RA(FR_CCED))  // Ç
+#define FR_AGRV_UP LS(RA(FR_AGRV))  // À
+#define FR_DIFF    LS(RA(FR_RPRN))  // ≠
+#define FR_PLUMI   LS(RA(FR_EQUAL)) // ±
 // Row 2
-#define FR_OE_UP    LS(RA(FR_O))     // Œ
+#define FR_OE_UP   LS(RA(FR_O))     // Œ
 // Row 4
-#define FR_SUPEQ    LS(RA(FR_LT))    // ≥
-#define FR_RGHTS    LS(RA(FR_C))     // ®
-#define FR_LARR     LS(RA(FR_V))     // ←
-#define FR_UARR     LS(RA(FR_B))     // ↑
-#define FR_RARR     LS(RA(FR_N))     // →
-#define FR_DDD      LS(RA(FR_COMMA)) // …
+#define FR_GTE     LS(RA(FR_GT))    // ≥
+#define FR_RGHTS   LS(RA(FR_C))     // ®
+#define FR_LARR    LS(RA(FR_V))     // ←
+#define FR_UARR    LS(RA(FR_B))     // ↑
+#define FR_RARR    LS(RA(FR_N))     // →
+#define FR_DDD     LS(RA(FR_COMMA)) // …
 
-#define LNX_CAPS_DELAY 10
+
+/* Actions */
+#define LNX_CUT   LS(DEL)
+#define LNX_COPY  LC(INS)
+#define LNX_PASTE LS(INS)
+#define LNX_UNDO  LC(Z)
+#define LNX_REDO  LS(LC(Z))

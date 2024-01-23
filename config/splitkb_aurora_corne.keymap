@@ -21,6 +21,8 @@
                       ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
 */
 
+// /!\ CTRL+BKSP / ALT+BKSP = delete word
+//  CTRL+SHFT+BKSP / CMD+BKSP = delete line
 MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
 
 MACRO(q_u, bindings = <&kp FR_Q &kp FR_U>;)
@@ -73,11 +75,12 @@ LAYER(MACOS,
   ___  ___  ___  ___  ___  ___
 )
 
+
 /*
           ┌─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
           │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │ ] ¿ │  «  │  »  │
           │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │ ¨ ¡ │
-          │     │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
+          │  '  │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
           └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
 */
 
@@ -86,7 +89,7 @@ MORPH_UP(_lt,      &kp FR_LT,    &none)
 MORPH_UP(gt,       &kp FR_GT,    &none)
 MORPH_UP(oe,       &kp FR_OE,    &kp FR_OE_UP)
 MORPH_UP(bsls,     &kp FR_BSLS,  &none)
-MORPH_UP(grave,    &kp FR_GRAVE, &none)
+MORPH_UP(grave2,   &kp FR_GRAVE, &kp FR_GRAVD)
 MORPH_UP(astr,     &kp FR_ASTR,  &none)
 MORPH_UP(slsh,     &kp FR_SLSH,  &none)
 MORPH_UP(lbrc,     &kp FR_LBRC,  &none)
@@ -106,7 +109,8 @@ MORPH_UP(rprn,     &kp FR_RPRN,  &none)
 MORPH_UP(hash,     &kp FR_HASH,  &none)
 MORPH_UP(diae_iem, &kp FR_DIAE,  &kp FR_IEM)
 // Row 3
-MORPH_UP(tild,     &kp FR_TILD,  &none)
+MORPH_UP(acute,    &kp FR_ACUTE, &none)
+MORPH_UP(tild2,    &kp FR_TILD,  &kp FR_TILDD)
 MORPH_UP(ampr,     &kp FR_AMPR,  &none)
 MORPH_UP(pipe,     &kp FR_PIPE,  &none)
 MORPH_UP(prcnt,    &kp FR_PRCNT, &none)
@@ -118,14 +122,16 @@ MORPH_UP(euro,     &kp FR_EURO,  &none)
 MORPH_UP(dlr,      &kp FR_DLR,   &none)
 
 LAYER(SYMBOLS,
-  ___  &_lt   &gt        &oe        &bsls  &grave    &astr  &slsh      &lbrc  &rbrc_iqm  &qml   &qmr
-  ___  &at    &dqt_apos  &unds_ddd  &ugrv  &equal    &plus  &minus_em  &lprn  &rprn      &hash  &diae_iem
-  ___  &none  &tild      &ampr      &pipe  &prcnt    &none  &cced      &lcbr  &rcbr      &euro  &dlr
+  ___  &_lt   &gt        &oe        &bsls  &grave2    &astr  &slsh      &lbrc  &rbrc_iqm  &qml   &qmr
+  ___  &at    &dqt_apos  &unds_ddd  &ugrv  &equal     &plus  &minus_em  &lprn  &rprn      &hash  &diae_iem
+  ___  &none  &tild2     &ampr      &pipe  &prcnt     &none  &cced      &lcbr  &rcbr      &euro  &dlr
   ___  ___  ___  ___  ___  ___
 )
 
 // Row 1
 MORPH_UP(win_oe,       &win_oe_lo,   &win_oe_up)
+MORPH_UP(win_grave2,   &win_grave,   &kp WIN_GRAVD)
+
 MORPH_UP(win_rbrc_iqm, &kp FR_RBRC,  &win_iqm)
 // Row 2
 MORPH_UP(win_dqt_apos, &kp FR_DQT,   &win_apos)
@@ -133,32 +139,45 @@ MORPH_UP(win_unds_ddd, &kp FR_UNDS,  &win_ddd)
 MORPH_UP(win_minus_em, &kp FR_MINUS, &win_emdash)
 MORPH_UP(win_diae_iem, &kp FR_DIAE,  &win_iem)
 // Row 3
+MORPH_UP(win_tild2,    &win_tild,    &kp WIN_TILDD)
 MORPH_UP(win_cced,     &kp FR_CCED,  &win_cced_up)
 
 LAYER(WINSYM,
-  ___  ___  ___            &win_oe        ___  ___    ___  ___            ___  &win_rbrc_iqm  &win_qml  &win_qmr
-  ___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___    ___  &win_minus_em  ___  ___            ___       &win_diae_iem
-  ___  ___  ___            ___            ___  ___    ___  &win_cced      ___  ___            ___       ___
+  ___  ___  ___            &win_oe        ___  &win_grave2    ___  ___            ___  &win_rbrc_iqm  &win_qml  &win_qmr
+  ___  ___  &win_dqt_apos  &win_unds_ddd  ___  ___            ___  &win_minus_em  ___  ___            ___       &win_diae_iem
+  ___  ___  &win_tild2     ___            ___  ___            ___  &win_cced      ___  ___            ___       ___
   ___  ___  ___  ___  ___  ___
 )
 
 // Row 1
-MORPH_UP(mac_grave, &kp MAC_GRAVE, &none)
-MORPH_UP(mac_astr,  &kp MAC_ASTR,  &none)
+MORPH_UP(mac_bsls,     &kp MAC_BSLS,  &none)
+MORPH_UP(mac_grave,    &kp MAC_GRAVD, &none)
+MORPH_UP(mac_astr,     &kp MAC_ASTR,  &none)
+MORPH_UP(mac_lbrc,     &kp MAC_LBRC,  &none)
+MORPH_UP(mac_rbrc_iqm, &kp MAC_RBRC,  &kp MAC_IQM)
+MORPH_UP(mac_qml,      &kp MAC_QML,   &none)
+MORPH_UP(mac_qmr,      &kp MAC_QMR,   &none)
 // Row 2
-MORPH_UP(mac_at,    &kp MAC_AT,    &none)
-MORPH_UP(mac_equal, &kp MAC_EQUAL, &none)
-MORPH_UP(mac_plus,  &kp MAC_PLUS,  &none)
-MORPH_UP(mac_hash,  &kp MAC_HASH,  &none)
+MORPH_UP(mac_at,       &kp MAC_AT,    &none)
+MORPH_UP(mac_dqt_apos, &kp FR_DQT,    &kp MAC_APOS)
+MORPH_UP(mac_unds_ddd, &kp MAC_UNDS,  &kp MAC_DDD)
+MORPH_UP(mac_equal,    &kp MAC_EQUAL, &none)
+MORPH_UP(mac_plus,     &kp MAC_PLUS,  &none)
+MORPH_UP(mac_minus_em, &kp MAC_MINUS, &kp MAC_EMDASH)
+MORPH_UP(mac_hash,     &kp MAC_HASH,  &none)
+MORPH_UP(mac_diae_iem, &kp FR_DIAE,   &kp MAC_IEM)
 // Row 3
-MORPH_UP(mac_tild,  &kp MAC_TILD,  &none)
-MORPH_UP(mac_pipe,  &kp MAC_PIPE,  &none)
-MORPH_UP(mac_cced,  &kp FR_CCED,  &mac_cced_up)
+MORPH_UP(mac_tild,     &kp MAC_TILDD, &none)
+MORPH_UP(mac_pipe,     &kp MAC_PIPE,  &none)
+MORPH_UP(mac_cced,     &kp FR_CCED,   &kp MAC_CCED_UP)
+MORPH_UP(mac_lcbr,     &kp MAC_LCBR,  &none)
+MORPH_UP(mac_rcbr,     &kp MAC_RCBR,  &none)
+MORPH_UP(mac_euro,     &kp MAC_EURO,  &none)
 
 LAYER(MACSYM,
-  ___  ___        ___  ___  ___   &mac_grave    &mac_astr  ___        ___  ___  ___        ___
-  ___  &mac_at    ___  ___  ___   &mac_equal    &mac_plus  ___        ___  ___  &mac_hash  ___
-  ___  &mac_tild  ___  &mac_pipe  ___  ___      ___        &mac_cced  ___  ___  ___        ___
+  ___  ___      ___            ___            &mac_bsls  &mac_grave    &mac_astr  ___        &mac_lbrc      &mac_rbrc_iqm  &mac_qml   &mac_qmr
+  ___  &mac_at  &mac_dqt_apos  &mac_unds_ddd  ___        &mac_equal    &mac_plus  ___        &mac_minus_em  ___            &mac_hash  &mac_diae_iem
+  ___  ___      &mac_tild      ___            &mac_pipe  ___           ___        &mac_cced  &mac_lcbr      &mac_rcbr      &mac_euro  ___
   ___  ___  ___  ___  ___  ___
 )
 
@@ -186,9 +205,9 @@ LAYER(WINNUM,
 )
 
 LAYER(MACNUM,
-  ___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-  ___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
-  ___  ___  ___  ___  ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___    ___    ___    ___  ___    ___  ___  ___  ___  ___  ___
+  ___  ___    ___    ___    ___  ___    ___  ___  ___  ___  ___  ___
+  ___  &none  &none  &none  ___  ___    ___  ___  ___  ___  ___  ___
   ___  ___  ___  ___  ___  ___
 )
 
@@ -202,9 +221,9 @@ LAYER(MACNUM,
 */
 
 LAYER(NAVIG,
-  ___  &none       &none      &none       &none        &none         &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
-  ___  &kp K_UNDO  &kp K_CUT  &kp K_COPY  &kp K_PASTE  &kp K_REDO    &kp CAPS    &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
-  ___  &none       &none      &none       &none        &none         &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
+  ___  &none         &none        &none         &none          &none           &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP
+  ___  &kp LNX_UNDO  &kp LNX_CUT  &kp LNX_COPY  &kp LNX_PASTE  &kp LNX_REDO    &kp CAPS    &kp LEFT  &kp DOWN    &kp UP      &kp RIGHT     &none
+  ___  &none         &none        &none         &none          &none           &kp INS     &kp HOME  &kp PG_DN   &kp PG_UP   &kp END       &kp PSCRN
   ___  ___  ___  ___  ___  ___
 )
 

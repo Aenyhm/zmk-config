@@ -1,3 +1,5 @@
+#pragma once
+
 #include "node_free.h"
 
 // Alphas and OS overlays
