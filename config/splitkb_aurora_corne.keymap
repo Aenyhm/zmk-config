@@ -17,13 +17,9 @@
     │C]ESC│  A  │  I  │  E  │  U  │ , ; │   │  P  │  T  │  S  │  R  │  N  │ ^ ! │
     │ GUI │  K  │  Y  │  È  │ . : │  W  │   │  G  │  C  │  M  │  H  │  V  │  Z  │
     ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
-                      │ ALT │ SYM │N]SPC│   │S]ENT│ NUM │B/DEL│
+                      │ ALT │ SYM │N]SPC│   │S]RET│ NUM │BSPC │
                       ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
 */
-
-// /!\ CTRL+BKSP / ALT+BKSP = delete word
-//  CTRL+SHFT+BKSP / CMD+BKSP = delete line
-MORPH(bsp_del, &kp BSPC, LCTL, &kp DEL)
 
 MACRO(q_u, bindings = <&kp FR_Q &kp FR_U>;)
 MACRO(q_u_up_lnx,
@@ -46,7 +42,7 @@ LAYER(DEFAULT,
   &kp TAB        &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B       &kp FR_F       &kp FR_D  &kp FR_L  &sqt_qmark  &qu_lnx   &kp FR_X
   &mt LCTRL ESC  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi    &kp FR_P       &kp FR_T  &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
   &kp LGUI       &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W       &kp FR_G       &kp FR_C  &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
-                                     &kp LALT   &mo SYM     &lt NAV SPC    &mt LSHFT RET  &mo NUM   &bsp_del
+                                     &kp LALT   &mo SYM     &lt NAV SPC    &mt LSHFT RET  &mo NUM   &kp BSPC
 )
 
 MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
@@ -81,7 +77,9 @@ LAYER(MACOS,
           │  <  │  >  │ œ Œ │  \  │  `  │   │  *  │  /  │  [  │ ] ¿ │  «  │  »  │
           │  @  │ " ’ │ _ … │  ù  │  =  │   │  +  │ - — │  (  │  )  │  #  │ ¨ ¡ │
           │  '  │  ~  │  &  │  |  │  %  │   │     │ ç Ç │  {  │  }  │  €  │  $  │
-          └─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
+          └─────┴─────┴─────┴─────┴─────┘   ├─────┼─────┼─────┼─────┴─────┴─────╯
+                                            │S+RET│     │ DEL │
+                                            ╰─────┘     └─────╯
 */
 
 // Row 1
@@ -122,10 +120,10 @@ MORPH_UP(euro,     &kp FR_EURO,  &none)
 MORPH_UP(dlr,      &kp FR_DLR,   &none)
 
 LAYER(SYMBOLS,
-  ___  &_lt   &gt        &oe        &bsls  &grave2    &astr  &slsh      &lbrc  &rbrc_iqm  &qml   &qmr
-  ___  &at    &dqt_apos  &unds_ddd  &ugrv  &equal     &plus  &minus_em  &lprn  &rprn      &hash  &diae_iem
-  ___  &none  &tild2     &ampr      &pipe  &prcnt     &none  &cced      &lcbr  &rcbr      &euro  &dlr
-  ___  ___  ___  ___  ___  ___
+  ___  &_lt   &gt        &oe        &bsls  &grave2    &astr        &slsh      &lbrc    &rbrc_iqm  &qml   &qmr
+  ___  &at    &dqt_apos  &unds_ddd  &ugrv  &equal     &plus        &minus_em  &lprn    &rprn      &hash  &diae_iem
+  ___  &none  &tild2     &ampr      &pipe  &prcnt     &none        &cced      &lcbr    &rcbr      &euro  &dlr
+                         ___        ___    ___        &kp RS(RET)  ___        &kp DEL
 )
 
 // Row 1
