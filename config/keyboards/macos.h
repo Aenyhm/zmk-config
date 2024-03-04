@@ -107,11 +107,11 @@
 
 
 /* Actions */
-#define MAC_CUT   LG(X)
-#define MAC_COPY  LG(C)
-#define MAC_PASTE LG(V)
-#define MAC_UNDO  LG(Z)
-#define MAC_REDO  LS(LG(Z))
+#define MAC_CUT   LG(FR_X)
+#define MAC_COPY  LG(FR_C)
+#define MAC_PASTE LG(FR_V)
+#define MAC_UNDO  LG(FR_Z)
+#define MAC_REDO  LS(LG(FR_Z))
 
 
 /* Alternate Alphas & Symbols */

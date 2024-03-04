@@ -1,17 +1,18 @@
 #pragma once
 
 #include "../node_free.h"
+#include "linux.h"
 
 #define WIN_GRAVD RA(N7)  // ` (dead)
 #define WIN_TILDD RA(N2)  // ~ (dead)
 
 
 /* Actions */
-#define WIN_CUT   LC(X)
-#define WIN_COPY  LC(C)
-#define WIN_PASTE LC(V)
-#define WIN_UNDO  LC(Z)
-#define WIN_REDO  LC(Y)
+#define WIN_CUT   LC(FR_X)
+#define WIN_COPY  LC(FR_C)
+#define WIN_PASTE LC(FR_V)
+#define WIN_UNDO  LC(FR_Z)
+#define WIN_REDO  LC(FR_Y)
 
 
 /* Alternate Alphas & Symbols */

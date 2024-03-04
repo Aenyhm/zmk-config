@@ -188,5 +188,5 @@
 #define LNX_CUT   LS(DEL)
 #define LNX_COPY  LC(INS)
 #define LNX_PASTE LS(INS)
-#define LNX_UNDO  LC(Z)
-#define LNX_REDO  LS(LC(Z))
+#define LNX_UNDO  LC(FR_Z)
+#define LNX_REDO  LS(LC(FR_Z))
