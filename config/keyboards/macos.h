@@ -112,7 +112,7 @@
 #define MAC_PASTE LG(FR_V)
 #define MAC_UNDO  LG(FR_Z)
 #define MAC_REDO  LS(LG(FR_Z))
-
+#define MAC_SAVE  LG(FR_S)
 
 /* Alternate Alphas & Symbols */
 MACRO(mac_agrv_up, bindings = <&kp MAC_GRAVD &kp LS(FR_A)>;)
