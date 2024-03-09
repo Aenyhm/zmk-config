@@ -39,3 +39,7 @@ COND_LAYER(MAC NAV, MAC_NAV)
 #define ADM 12
 
 COND_LAYER(SYM NUM, ADM)
+
+
+// Gaming
+#define GAM 13

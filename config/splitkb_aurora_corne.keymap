@@ -11,6 +11,10 @@
 
 #define ___ &trans
 
+// MAJ + SUPPR
+// Refresh
+// HomeRows ?
+
 /*
     ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
     │ TAB │  À  │  J  │  O  │  É  │  B  │   │  F  │  D  │  L  │ ' ? │  Qu │  X  │
@@ -244,7 +248,7 @@ LAYER(MACNAV,
     ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
     │RESET│     │     │     │     │     │   │BTCLR│     │     │     │     │RESET│
     │     │WIN1 │MAC2 │ BT3 │ BT4 │     │   │     │     │     │     │     │     │
-    │     │     │     │     │     │     │   │USBTt│     │     │     │     │     │
+    │     │ GAM │     │     │     │     │   │USBTt│     │     │     │     │     │
     ╰─────┴─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
 */
 
@@ -255,8 +259,25 @@ MACRO(tbt3, bindings = <&bt BT_SEL 2 &to DEF>;)
 MACRO(tbt4, bindings = <&bt BT_SEL 3 &to DEF>;)
 
 LAYER(ADMIN,
-  &bootloader  &none  &none  &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
-  &none        &win1  &mac2  &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
-  &none        &none  &none  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
+  &bootloader  &none    &none  &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
+  &none        &win1    &mac2  &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
+  &none        &to GAM  &none  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
   ___  ___  ___  ___  ___  ___
+)
+
+
+/*
+    ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+    │ ESC │  T  │  Q  │ W ↑ │  E  │  R  │   │  7  │  8  │  9  │     │     │ DEF │
+    │ TAB │SHFT │ A ← │ S ↓ │ D → │  F  │   │  4  │  5  │  6  │     │     │     │
+    │ CTRL│  B  │  Z  │  X  │  C  │  V  │   │  1  │  2  │  3  │     │     │     │
+    ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
+                      │ ALT │  G  │ SPC │   │ RET │ GUI │  0  │
+                      ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
+*/
+LAYER(GAMING,
+  &kp ESC    &kp T      &kp Q  &kp W     &kp E  &kp R      &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &none  &to DEF
+  &kp TAB    &kp LSHFT  &kp A  &kp S     &kp D  &kp F      &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &none
+  &kp LCTRL  &kp B      &kp Z  &kp X     &kp C  &kp V      &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &none
+                               &kp LALT  &kp G  &kp SPC    &kp RET    &kp LGUI   &kp KP_N0
 )
