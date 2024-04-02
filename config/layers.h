@@ -38,7 +38,7 @@ COND_LAYER(MAC NAV, MAC_NAV)
 // Bluetooth & Keyboard
 #define ADM 12
 
-COND_LAYER(SYM NUM, ADM)
+COND_LAYER(NAV SYM, ADM)
 
 
 // Gaming

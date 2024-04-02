@@ -2,19 +2,30 @@
 
 #define STRINGIFY(x) #x
 
-#define MORPH(name, k1, mod, k2) \
+#define MORPH(name, k1, modifiers, k2) \
 / { \
   behaviors { \
     name: name { \
       compatible = "zmk,behavior-mod-morph"; \
       #binding-cells = <0>; \
       bindings = <k1>, <k2>; \
-      mods = <(MOD_##mod)>; \
+      mods = <(modifiers)>; \
     }; \
   }; \
 };
 
-#define MORPH_UP(name, k1, k2) MORPH(name, k1, LSFT, k2)
+#define TAPDANCE(name, ...) \
+/ { \
+  behaviors { \
+    name: name {  \
+      compatible = "zmk,behavior-tap-dance"; \
+      #binding-cells = <0>; \
+      bindings = __VA_ARGS__; \
+    }; \
+  }; \
+};
+
+#define MORPH_UP(name, k1, k2) MORPH(name, k1, MOD_LSFT|MOD_RSFT, k2)
 
 #define MACRO(...) \
 / { \
