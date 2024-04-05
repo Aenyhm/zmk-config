@@ -3,6 +3,9 @@
 ## Features
 
 - [Optimot](https://optimot.fr/) layout
-- Bindings for Windows, macOS and Linux (French alt.)
+- Bindings for:
+    - Linux French alt.
+    - Windows Azerty
+    - macOS Azerty
 
 ![layers](layers.png)

@@ -49,7 +49,7 @@ LAYER(DEFAULT,
   &kp TAB       &agrv     &kp FR_J  &kp FR_O   &eacu       &kp FR_B         &kp FR_F     &kp FR_D      &kp FR_L  &sqt_qmark  &qu_lnx   &kp FR_X
   &td_ctrl_esc  &kp FR_A  &kp FR_I  &kp FR_E   &kp FR_U    &comma_semi      &kp FR_P     &kp FR_T      &kp FR_S  &kp FR_R    &kp FR_N  &caret_excl
   &kp LGUI      &kp FR_K  &kp FR_Y  &egrv      &dot_colon  &kp FR_W         &kp FR_G     &kp FR_C      &kp FR_M  &kp FR_H    &kp FR_V  &kp FR_Z
-                                     &kp LALT   &td_nav_oe  &mt LSHFT SPC    &lt NUM RET  &td_sym_cced  &kp BSPC
+                                    &kp LALT   &td_nav_oe  &mt LSHFT SPC    &lt NUM RET  &td_sym_cced  &kp BSPC
 )
 
 MACRO(q_u_up, bindings = <&kp RS(FR_Q) &kp FR_U>;) // Windows & macOS
