@@ -43,3 +43,4 @@ COND_LAYER(NAV SYM, ADM)
 
 // Gaming
 #define GAM 13
+#define GAM_ARC 14

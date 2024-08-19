@@ -181,7 +181,7 @@ LAYER(MACNAV,
     ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
     │RESET│     │     │     │     │     │   │BTCLR│     │     │     │     │RESET│
     │     │WIN1 │MAC2 │ BT3 │ BT4 │     │   │     │     │     │     │     │     │
-    │     │game │     │     │     │     │   │USBTt│     │     │     │     │     │
+    │     │game1│game2│     │     │     │   │USBTt│     │     │     │     │     │
     ╰─────┴─────┴─────┴─────┴─────┴─────┘   └─────┴─────┴─────┴─────┴─────┴─────╯
 */
 
@@ -192,9 +192,9 @@ MACRO(tbt3, bindings = <&bt BT_SEL 2 &to DEF>;)
 MACRO(tbt4, bindings = <&bt BT_SEL 3 &to DEF>;)
 
 LAYER(ADMIN,
-  &bootloader  &none    &none  &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
-  &none        &win1    &mac2  &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
-  &none        &to GAM  &none  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
+  &bootloader  &none    &none        &none  &none  &none    &bt BT_CLR    &none  &none  &none  &none  &bootloader
+  &none        &win1    &mac2        &tbt3  &tbt4  &none    &none         &none  &none  &none  &none  &none
+  &none        &to GAM  &to GAM_ARC  &none  &none  &none    &out OUT_TOG  &none  &none  &none  &none  &none
   ___  ___  ___  ___  ___  ___
 )
 
@@ -213,4 +213,20 @@ LAYER(GAMING,
   &kp ESC    &kp LSHFT  &kp FR_Q  &kp FR_S  &kp FR_D  &kp FR_F    &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &none
   &kp LCTRL  &kp FR_B   &kp FR_W  &kp FR_X  &kp FR_C  &kp FR_V    &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &none
                                   &kp LALT  &kp FR_G  &kp SPC     &kp RET    &kp LGUI   &kp KP_N0
+)
+
+/*
+    ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
+    │ TAB │  T  │  A  │  ↑  │  O  │  R  │   │     │     │     │     │     │ def │
+    │ ESC │SHFT │  ←  │  ↓  │  →  │  F  │   │     │     │     │     │     │     │
+    │ CTRL│  S  │  W  │  I  │  C  │  L  │   │     │     │     │     │     │SAVE │
+    ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
+                      │ ALT │HOME │ SPC │   │ RET │ GUI │     │
+                      ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
+*/
+LAYER(ARCANUM,
+  &kp TAB    &kp FR_T   &kp FR_A  &kp UP    &kp FR_O   &kp FR_R    &none    &none     &none  &none  &none  &to DEF
+  &kp ESC    &kp LSHFT  &kp LEFT  &kp DOWN  &kp RIGHT  &kp FR_F    &none    &none     &none  &none  &none  &none
+  &kp LCTRL  &kp FR_S   &kp FR_W  &kp FR_I  &kp FR_C   &kp FR_L    &none    &none     &none  &none  &none  &kp F7
+                                  &kp LALT  &kp HOME   &kp SPC     &kp RET  &kp LGUI  &none
 )
