@@ -6,6 +6,6 @@
 - Bindings for:
     - Linux French alt.
     - Windows Azerty
-    - macOS Azerty
+    - MacOS Azerty (WIP)
 
 ![layers](layers.png)

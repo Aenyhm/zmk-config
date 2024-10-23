@@ -1,7 +1,5 @@
 #pragma once
 
-#define STRINGIFY(x) #x
-
 #define MORPH(name, k1, modifiers, k2) \
 / { \
   behaviors { \
@@ -45,12 +43,12 @@
   }; \
 };
 
-#define LAYER(name, layout) \
+#define LAYER(id, display_name, layout) \
 / { \
   keymap { \
     compatible = "zmk,keymap"; \
-    name##_layer { \
-      label = STRINGIFY(name); \
+    id##_layer { \
+      label = display_name; \
       bindings = <layout>; \
     }; \
   }; \
