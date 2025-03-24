@@ -197,32 +197,32 @@ LAYER(ADMIN, "Admin",
 
 /*
     ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
-    │ TAB │  T  │  A  │ Z ↑ │  E  │  R  │   │  7  │  8  │  9  │     │     │<def>│
-    │ ESC │SHFT │ Q ← │ S ↓ │ D → │  F  │   │  4  │  5  │  6  │     │     │     │
-    │ CTRL│  B  │  W  │  X  │  C  │  V  │   │  1  │  2  │  3  │     │     │     │
+    │ TAB │  T  │  A  │ Z ↑ │  E  │  R  │   │  6  │  7  │  8  │  9  │  0  │<def>│
+    │ ESC │SHFT │ Q ← │ S ↓ │ D → │  F  │   │  I  │  ←  │  ↓  │  ↑  │  →  │ F8  │
+    │  G  │  B  │  W  │  X  │  C  │  V  │   │  1  │  2  │  3  │  4  │  5  │  L  │
     ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
-                      │ ALT │  G  │ SPC │   │ RET │ GUI │  0  │
+                      │ ALT │CTRL │ SPC │   │ RET │ GUI │  C  │
                       ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
 */
 LAYER(GAMING, "Gaming",
-  &kp TAB    &kp FR_T   &kp FR_A  &kp FR_Z  &kp FR_E  &kp FR_R    &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &none  &to DEF
-  &kp ESC    &kp LSHFT  &kp FR_Q  &kp FR_S  &kp FR_D  &kp FR_F    &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none  &none
-  &kp LCTRL  &kp FR_B   &kp FR_W  &kp FR_X  &kp FR_C  &kp FR_V    &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none  &none
-                                  &kp LALT  &kp FR_G  &kp SPC     &kp RET    &kp LGUI   &kp KP_N0
+  &kp TAB   &kp FR_T   &kp FR_A  &kp FR_Z  &kp FR_E   &kp FR_R    &kp N6    &kp N7    &kp N8    &kp N9  &kp N0     &to DEF
+  &kp ESC   &kp LSHFT  &kp FR_Q  &kp FR_S  &kp FR_D   &kp FR_F    &kp FR_I  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &kp F8
+  &kp FR_G  &kp FR_B   &kp FR_W  &kp FR_X  &kp FR_C   &kp FR_V    &kp N1    &kp N2    &kp N3    &kp N4  &kp N5     &kp FR_L
+                                 &kp LALT  &kp LCTRL  &kp SPC     &kp RET   &kp LGUI  &kp FR_C
 )
 
 /*
     ╭─────┬─────┬─────┬─────┬─────┬─────╮   ╭─────┬─────┬─────┬─────┬─────┬─────╮
     │ TAB │  T  │  A  │  ↑  │  O  │  R  │   │     │     │     │     │     │<def>│
     │ ESC │SHFT │  ←  │  ↓  │  →  │  F  │   │     │     │     │     │     │     │
-    │ CTRL│  S  │  W  │  I  │  C  │  L  │   │     │     │     │     │     │SAVE │
+    │ HOME│  S  │  W  │  I  │  C  │  L  │   │     │     │     │     │     │SAVE │
     ╰─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────╯
-                      │ ALT │HOME │ SPC │   │ RET │ GUI │     │
+                      │ ALT │CTRL │ SPC │   │ RET │ GUI │     │
                       ╰─────┴─────┴─────╯   ╰─────┴─────┴─────╯
 */
 LAYER(ARCANUM, "Arcanum",
-  &kp TAB    &kp FR_T   &kp FR_A  &kp UP    &kp FR_O   &kp FR_R    &none    &none     &none  &none  &none  &to DEF
-  &kp ESC    &kp LSHFT  &kp LEFT  &kp DOWN  &kp RIGHT  &kp FR_F    &none    &none     &none  &none  &none  &none
-  &kp LCTRL  &kp FR_S   &kp FR_W  &kp FR_I  &kp FR_C   &kp FR_L    &none    &none     &none  &none  &none  &kp F7
-                                  &kp LALT  &kp HOME   &kp SPC     &kp RET  &kp LGUI  &none
+  &kp TAB   &kp FR_T   &kp FR_A  &kp UP    &kp FR_O   &kp FR_R    &none    &none     &none  &none  &none  &to DEF
+  &kp ESC   &kp LSHFT  &kp LEFT  &kp DOWN  &kp RIGHT  &kp FR_F    &none    &none     &none  &none  &none  &none
+  &kp HOME  &kp FR_S   &kp FR_W  &kp FR_I  &kp FR_C   &kp FR_L    &none    &none     &none  &none  &none  &kp F7
+                                 &kp LALT  &kp LCTRL  &kp SPC     &kp RET  &kp LGUI  &none
 )
